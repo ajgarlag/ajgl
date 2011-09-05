@@ -1,3 +1,6 @@
 [submodule "vendor/ajgarlag/zf1"]
 	path = vendor/ajgarlag/zf1
 	url = git://github.com/ajgarlag/zf1.git
+[submodule "vendor/guilhermeblanco/ZF1-Doctrine2-ServiceLayer"]
+	path = vendor/guilhermeblanco/ZF1-Doctrine2-ServiceLayer
+	url = git://github.com/guilhermeblanco/ZF1-Doctrine2-ServiceLayer.git
