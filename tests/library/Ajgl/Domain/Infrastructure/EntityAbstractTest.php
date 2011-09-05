@@ -120,19 +120,78 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest extends PHPUnit_Framework_Te
 
     public function testMagicCallCallingSetter()
     {
-        $this->assertEquals('Set foo', $this->_entity->setPropertyE('foo'));
-        $this->assertEquals('Get foo', $this->_entity->getPropertyE());
+        $this->assertSame($this->_entity, $this->_entity->setPropertyE('foo'));
+        $this->assertEquals('Get E:foo', $this->_entity->getPropertyE());
+    }
+    
+    public function testDirectAccessNotByPassGetter()
+    {
+        $this->assertEquals('Get ', $this->_entity->propertyE);
+    }
+
+    public function testDirectAccessNotByPassSetter()
+    {
+        $this->_entity->propertyE = 'foo';
+        $this->assertEquals('Get E:foo', $this->_entity->propertyE);
     }
 
     public function testMagicCallCallingGetterForUndefinedProperty()
     {
-        $this->assertEquals('Get undefined', $this->_entity->getPropertyF());
+        $this->assertEquals('UNDEFINED', $this->_entity->getPropertyF());
     }
 
     public function testMagicCallCallingSetterForUndefinedProperty()
     {
-        $this->assertEquals('Set undefined bar', $this->_entity->setPropertyF('bar'));
-        $this->assertEquals('Get undefined', $this->_entity->getPropertyF());
+        $this->assertSame($this->_entity, $this->_entity->setPropertyF('bar'));
+        $this->assertEquals('UNDEFINED:bar', $this->_entity->getPropertyF());
+    }
+    
+    /**
+     * @expectedException Exception
+     */
+    public function testMagicCallCallingGetterWithParam()
+    {
+        $this->_entity->getPropertyA('foo');
+    }
+    
+    /**
+     * @expectedException Exception
+     */
+    public function testMagicCallCallingSetterWithoutParam()
+    {
+        $this->_entity->setPropertyA();
+    }
+    
+    /**
+     * @expectedException Exception
+     */
+    public function testMagicCallCallingSetterWithMoreThanOneParam()
+    {
+        $this->_entity->setPropertyA('foo', 'bar');
+    }
+    
+    /**
+     * @expectedException Exception
+     */
+    public function testMagicCallNotCallingGetterNorSetter()
+    {
+        $this->_entity->fooBar();
+    }
+        
+    public function testIsSet()
+    {
+        $this->assertFalse(isset($this->_entity->propertyA));
+        $this->assertTrue(isset($this->_entity->propertyB));
+    }
+    
+    public function testUnset()
+    {
+        $this->assertFalse(isset($this->_entity->propertyA));
+        $this->assertTrue(isset($this->_entity->propertyB));
+        unset($this->_entity->propertyA);
+        unset($this->_entity->propertyB);
+        $this->assertFalse(isset($this->_entity->propertyA));
+        $this->assertFalse(isset($this->_entity->propertyB));
     }
     
     public function testToArray()
@@ -160,11 +219,13 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest_Concrete
     private $_propertyC;
     protected $_propertyD;
     private $propertyE;
+    
+    private $_lazyPropertyF = 'UNDEFINED';
 
     public function setPropertyE($value)
     {
-        $this->propertyE = $value;
-        return 'Set ' . $this->propertyE;
+        $this->propertyE = 'E:'.$value;
+        return $this;
     }
 
     public function getPropertyE()
@@ -174,11 +235,12 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest_Concrete
 
     public function setPropertyF($value)
     {
-        return 'Set undefined ' . $value;
+        $this->_lazyPropertyF = 'UNDEFINED:' . $value;
+        return $this;
     }
 
     public function getPropertyF()
     {
-        return 'Get undefined';
+        return $this->_lazyPropertyF;
     }
 }

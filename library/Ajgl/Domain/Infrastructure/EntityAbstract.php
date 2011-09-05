@@ -143,7 +143,9 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
                 break;
             case 'set':
                 if ($argc != 1) {
-                    throw new Exception("Calling a setter with $arc arguments. Only one argument allowed");
+                    throw new Exception(
+                        "Calling a setter with $arc arguments. Only one argument allowed"
+                    );
                 }
                 $this->__set($property, current($arguments));
                 return $this;
