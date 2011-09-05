@@ -3,6 +3,7 @@
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(dirname(__FILE__) . '/../library'),
     realpath(dirname(__FILE__) . '/../vendor/ajgarlag/zf1/library'),
+    realpath(dirname(__FILE__) . '/../vendor/guilhermeblanco/ZF1-Doctrine2-ServiceLayer/src/library'),
     get_include_path(),
 )));
 
@@ -13,4 +14,5 @@ $zfa = Zend_Loader_Autoloader::getInstance();
 Zend_Registry::set('Zend_Locale', new Zend_Locale('en'));
 
 $zfa->registerNamespace('Ajgl_');
+$zfa->registerNamespace('Bisna');
 
