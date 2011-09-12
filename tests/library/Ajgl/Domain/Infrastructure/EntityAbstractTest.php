@@ -196,16 +196,33 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest extends PHPUnit_Framework_Te
     
     public function testToArray()
     {
-        $data = array('propertyB' => 2, 'propertyG' => null);
+        $data = array('propertyB' => 2, 'propertyG' => null, 'propertyH' => null);
         $this->assertEquals($data, $this->_entity->toArray());
         $this->assertEquals(array_keys($data), array_keys($this->_entity->toArray()));
     }
     
     public function testFromArray()
     {
-        $data = array('propertyB' => null, 'propertyG' => 43);
+        $data = array('propertyB' => 2, 'propertyG' => 43);
+        $expected = array_merge($data, array('propertyH' => null));
         $this->_entity->fromArray($data);
-        $this->assertEquals($data, $this->_entity->toArray());
+        $this->assertEquals($expected, $this->_entity->toArray());
+    }
+    
+    public function testFromArrayCallsUnsetOnNullValues()
+    {
+        $data = array('propertyG' => 'foo', 'propertyH' => 'bar');
+        try {
+            $this->_entity->fromArray($data);
+            $this->fail('propertyH must admit only stdClass objects as values');
+        } catch (PHPUnit_Framework_Error $e) {}
+        $h = new stdClass();
+        $data = array('propertyG' => 'foo', 'propertyH' => $h);
+        $this->_entity->fromArray($data);
+        $this->assertSame($h, $this->_entity->getPropertyH());
+        $data = array('propertyH' => null);
+        $this->_entity->fromArray($data);
+        $this->assertNull($this->_entity->getPropertyH());
     }
 
 }
@@ -219,6 +236,11 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest_Concrete
     private $_propertyC;
     protected $_propertyD;
     private $propertyE;
+    
+    /**
+     * @var stdClass
+     */
+    protected $propertyH;
     
     private $_lazyPropertyF = 'UNDEFINED';
 
@@ -242,5 +264,11 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest_Concrete
     public function getPropertyF()
     {
         return $this->_lazyPropertyF;
+    }
+    
+    public function setPropertyH(stdClass $object)
+    {
+        $this->propertyH = $object;
+        return $this;
     }
 }

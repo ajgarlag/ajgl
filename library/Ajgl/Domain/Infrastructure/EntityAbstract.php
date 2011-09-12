@@ -205,8 +205,12 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
     public function fromArray(array $data)
     {
         foreach ($data as $property => $value) {
-            $method = 'set' . ucfirst($property);
-            $this->$method($value);
+            if ($value !== null) {
+                $method = 'set' . ucfirst($property);
+                $this->$method($value);    
+            } else {
+                $this->__unset($property);
+            }
         }
     }
 }
