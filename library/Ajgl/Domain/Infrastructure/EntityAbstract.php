@@ -23,7 +23,7 @@
  */
 
 /**
- * Plugin to render the messages registered with the flashMessenger action helper
+ * Abstract entity class
  * @category   Ajgl
  * @package    Ajgl_Domain
  * @subpackage Infrastructure
@@ -31,6 +31,7 @@
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 abstract class Ajgl_Domain_Infrastructure_EntityAbstract
+    implements Ajgl_Domain_Infrastructure_EntityInterface
 {
     /**
      * Name of entity properties
@@ -183,6 +184,13 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
     }
     
     /**
+     * @return string
+     */
+    public function getRootClass() {
+        return get_class($this);
+    }
+    
+    /**
      * Converts the object graph to an associative array
      * @return array
      */
@@ -212,5 +220,6 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
                 $this->__unset($property);
             }
         }
+        return $this;
     }
 }

@@ -23,7 +23,8 @@
  */
 
 /**
- * Plugin to render the messages registered with the flashMessenger action helper
+ * Abstract entity class tests
+ * 
  * @category   Ajgl
  * @package    Ajgl_Domain
  * @subpackage UnitTests
@@ -205,7 +206,7 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest extends PHPUnit_Framework_Te
     {
         $data = array('propertyB' => 2, 'propertyG' => 43);
         $expected = array_merge($data, array('propertyH' => null));
-        $this->_entity->fromArray($data);
+        $this->assertSame($this->_entity, $this->_entity->fromArray($data));
         $this->assertEquals($expected, $this->_entity->toArray());
     }
     
@@ -243,6 +244,16 @@ class Ajgl_Domain_Infrastructure_EntityAbstractTest_Concrete
     protected $propertyH;
     
     private $_lazyPropertyF = 'UNDEFINED';
+    
+    public function hasIdentity()
+    {
+        return true;
+    }
+    
+    public function getIdentity()
+    {
+        return 'a';
+    }
 
     public function setPropertyE($value)
     {
