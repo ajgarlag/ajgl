@@ -40,6 +40,7 @@ interface Ajgl_Domain_Infrastructure_EntityInterface {
     /**
      * Returns the entity identity
      * @return mixed
+     * @throws Exception if no identity
      */
     public function getIdentity();
     
