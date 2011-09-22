@@ -54,23 +54,23 @@ class Ajgl_AclTest
                     'partner' => array('member', 'api')
                 ),
                 'resources' => array(
-                    'default:index' => null,
-                    'default:error'=> null,
-                    'default:login' => null,
-                    'default:lala' => 'default:login',
-                    'account:index' => null,
-                    'account:password' => null
+                    'default#index' => null,
+                    'default#error'=> null,
+                    'default#login' => null,
+                    'default#lala' => 'default#login',
+                    'account#index' => null,
+                    'account#password' => null
                 ),
                 'permissions' => array(
                     'allow' => array(
-                        'default:index' => null,
-                        'default:error' => null,
-                        'default:login' => array(
+                        'default#index' => null,
+                        'default#error' => null,
+                        'default#login' => array(
                             'login' => 'guest',
                             'logout' => 'member'
                         ),
-                        'account:index' => 'member',
-                        'account:password' => array(
+                        'account#index' => 'member',
+                        'account#password' => array(
                             'index' => 'member',
                             'recover' => 'guest',
                             'reset' => 'guest',
@@ -79,7 +79,7 @@ class Ajgl_AclTest
                         )
                     ),
                     'deny' => array(
-                        'default:lala' => null
+                        'default#lala' => null
                     )
                 )
             )
@@ -133,10 +133,6 @@ class Ajgl_AclTest
                 }
             }
         }
-        
-        $w = new Zend_Config_Writer_Ini();
-        $w->setConfig($this->_config);
-        $w->write('/tmp/lala.ini');
     }
     
     protected function _assertallow($role = null, $resource = null, $privilege = null)
