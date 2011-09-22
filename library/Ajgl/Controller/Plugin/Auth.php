@@ -64,7 +64,7 @@ class Ajgl_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         $controller = $request->getControllerName();
         $action     = $request->getActionName();
         $module     = $request->getModuleName();
-        $resource   = $module.'.'.$controller;
+        $resource   = $module . ':' . $controller;
 
         $auth = $this->getAuth();
         $acl = $this->getAcl();
