@@ -33,33 +33,81 @@
 class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
 {
     /**
-     * @var Zend_Controller_Action_Helper_FlashMessenger
+     * @var Zend_Controller_Action_Helper_FlashMessenger 
      */
     protected $_flashMessenger;
     
     /**
-     * Retrieve the FlashMessenger messages.
-     *
-     * @param string|null $namespace
-     * @return string 
+     * @param string $namespace
+     * @return CudbApp_View_Helper_FlashMessenger
      */
     public function flashMessenger($namespace = null)
     {
-        // Retrieve instance
-        $this->_flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-
         // Set namespace to retrieve
         if ($namespace !== null) {
-            $this->_flashMessenger->setNamespace($namespace);
+            $this->getFlashMessenger()->setNamespace($namespace);
         }
 
-        $messages = array_merge(
-            $this->_flashMessenger->getMessages(),
-            $this->_flashMessenger->getCurrentMessages()
-        );
+        return $this;
+    }
+    
+    /**
+     * @return Zend_Controller_Action_Helper_FlashMessenger 
+     */
+    public function getFlashMessenger()
+    {
+        if (null == $this->_flashMessenger) {
+            $this->_flashMessenger 
+                = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+        }
         
-        $this->_flashMessenger->clearCurrentMessages();
-        
-        return $this->view->htmlList($messages);
+        return $this->_flashMessenger;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getAllMessages()
+    {
+        $messages = array();
+        if ($this->getFlashMessenger()->hasMessages()) {
+            $messages = array_merge($messages, $this->getFlashMessenger()->getMessages());
+        }
+        if ($this->getFlashMessenger()->hasCurrentMessages()) {
+            $messages = array_merge($messages, $this->getFlashMessenger()->getCurrentMessages());
+        }
+        return $messages;
+    }
+    
+    /**
+     * @return void
+     */
+    public function clearAllMessages()
+    {
+        if ($this->getFlashMessenger()->hasMessages()) {
+            $this->getFlashMessenger()->clearMessages();
+        }
+        if ($this->getFlashMessenger()->hasCurrentMessages()) {
+            $this->getFlashMessenger()->clearCurrentMessages();
+        }
+    }
+    
+    /**
+     * @return array
+     */
+    public function getAndClearAllMessages()
+    {
+        $messages = $this->getAllMessages();
+        $this->clearAllMessages();
+        return $messages;
+    }
+    
+    /**
+     * @param string $name
+     * @param mixed $arguments
+     * @return mixed 
+     */
+    public function __call($name, $arguments) {
+        return call_user_func_array(array($this->getFlashMessenger(), $name), $arguments);
     }
 }
