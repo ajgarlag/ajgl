@@ -27,10 +27,10 @@
  * @subpackage UnitTests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
-class Ajgl_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase {
+class Ajgl_Controller_Action_Helper_AuthTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * @var Ajgl_Controller_Plugin_Auth
+     * @var Ajgl_Controller_Action_Helper_Auth
      */
     protected $object;
 
@@ -40,7 +40,7 @@ class Ajgl_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase {
      */
     protected function setUp() {
         Zend_Registry::_unsetInstance();
-        $this->object = new Ajgl_Controller_Plugin_Auth;
+        $this->object = new Ajgl_Controller_Action_Helper_Auth;
     }
 
     /**
@@ -61,8 +61,6 @@ class Ajgl_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-
-    
     public function testGetAclGetsFromZendRegistry()
     {
         $acl = new Zend_Acl;
@@ -108,23 +106,18 @@ class Ajgl_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase {
         $this->object->setGetRoleCallback(true);
     }
     
-    public function testGetRoleFailsIfNoCallbackSet()
+    public function testGetRoleReturnsNullIfNoCallbackSet()
     {
-        $this->setExpectedException('UnexpectedValueException');
-        $this->object->getRole();
+        $this->assertNull($this->object->getRole());
     }
     
     public function testSetGetRoleCallback()
     {
-        $a = new stdClass();
-        $f = function() use ($a) 
-            {
-                return $a;
-            };
+        $f = create_function('', 'return new stdClass();');
         $this->object->setGetRoleCallback($f);
-        $this->assertSame($a, $this->object->getRole());
+        $this->assertTrue($this->object->getRole() instanceof stdClass);
         
-        $f = function($v) {return $v;};
+        $f = create_function('$v', 'return $v;');
         $this->object->setGetRoleCallback($f,array('roleName'));
         $this->assertEquals('roleName', $this->object->getRole());
     }
