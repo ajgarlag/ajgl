@@ -50,10 +50,10 @@ class Ajgl_Acl
     protected function _loadRoles(Zend_Config $roles)
     {
         foreach ($roles as $role => $parentRoles) {
-            if (!empty($parentRoles)) {
-                if (!is_scalar($parentRoles)) {
-                    $parentRoles = $parentRoles->toArray();
-                }
+            if (empty($parentRoles)) {
+                $parentRoles = null;
+            } elseif (!is_scalar($parentRoles)) {
+                $parentRoles = $parentRoles->toArray();
             }
             $this->addRole($role, $parentRoles);
         }
@@ -65,6 +65,9 @@ class Ajgl_Acl
     protected function _loadResources(Zend_Config $resources)
     {
         foreach ($resources as $resource => $parentResource) {
+            if (empty($parentResource)) {
+                $parentResource = null;
+            }
             $this->addResource($resource, $parentResource);
         }
     }
