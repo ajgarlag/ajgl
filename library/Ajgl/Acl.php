@@ -22,7 +22,7 @@
  */
 
 /**
- * Criteria class
+ * Acl class
  * @category   Ajgl
  * @package    Ajgl_Acl
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
