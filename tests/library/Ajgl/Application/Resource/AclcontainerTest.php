@@ -27,13 +27,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
-class Ajgl_Application_Resource_AclContainerTest
+class Ajgl_Application_Resource_AclcontainerTest
     extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Application_Resource_AclContainer
+     * @var Ajgl_Application_Resource_Aclcontainer
      */
-    protected $_aclContainer;
+    protected $_aclcontainer;
  
     /**
      * @var array
@@ -80,20 +80,20 @@ class Ajgl_Application_Resource_AclContainerTest
                 )
             )
         );
-        $this->_aclContainer = new Ajgl_Application_Resource_AclContainer();
+        $this->_aclcontainer = new Ajgl_Application_Resource_Aclcontainer();
     }
 
     public function testInit()
     {
-        $this->assertSame($this->_aclContainer, $this->_aclContainer->init());
+        $this->assertSame($this->_aclcontainer, $this->_aclcontainer->init());
     }
     
     public function testGetAcl()
     {
-        $this->_aclContainer->setOptions($this->_options);
-        $acl = $this->_aclContainer->getAcl();
+        $this->_aclcontainer->setOptions($this->_options);
+        $acl = $this->_aclcontainer->getAcl();
         $this->assertTrue($acl instanceof Ajgl_Acl);
-        $this->assertSame($acl, $this->_aclContainer->getAcl());
+        $this->assertSame($acl, $this->_aclcontainer->getAcl());
         $this->assertTrue($acl->has('account#index'));
     }
 }

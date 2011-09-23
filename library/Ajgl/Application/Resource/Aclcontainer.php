@@ -30,7 +30,7 @@
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Application_Resource_AclContainer
+class Ajgl_Application_Resource_Aclcontainer
     extends Zend_Application_Resource_ResourceAbstract
 {
     /**
@@ -56,7 +56,7 @@ class Ajgl_Application_Resource_AclContainer
     /**
      * Defined by Zend_Application_Resource_Resource
      *
-     * @return Ajgl_Application_Resource_AclContainer
+     * @return Ajgl_Application_Resource_Aclcontainer
      */
     public function init()
     {
