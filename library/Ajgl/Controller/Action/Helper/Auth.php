@@ -138,7 +138,7 @@ class Ajgl_Controller_Action_Helper_Auth
             if (!$this->getAuth()->hasIdentity()) {
                 $routeOptions = $this->getLoginRouteOptions();
             } else {
-                $routeOptions = $this->getLoginUnauthOptions();
+                $routeOptions = $this->getUnauthRouteOptions();
             }
             
             $uri = $this->getRequest()->getRequestUri();
