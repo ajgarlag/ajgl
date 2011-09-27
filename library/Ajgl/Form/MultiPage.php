@@ -22,7 +22,6 @@
  */
 
 /**
- * Plugin to render the messages registered with the flashMessenger action helper
  * @category   Ajgl
  * @package    Ajgl_Form
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
