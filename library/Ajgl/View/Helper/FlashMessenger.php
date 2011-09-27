@@ -63,6 +63,15 @@ class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
         
         return $this->_flashMessenger;
     }
+
+    /**
+     * @return boolean
+     */
+    public function hasAnyMessages()
+    {
+        return $this->getFlashMessenger()->hasCurrentMessages()
+            || $this->getFlashMessenger()->hasMessages();
+    }
     
     /**
      * @return array
