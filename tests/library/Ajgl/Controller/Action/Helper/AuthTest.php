@@ -30,6 +30,11 @@
 class Ajgl_Controller_Action_Helper_AuthTest extends PHPUnit_Framework_TestCase {
 
     /**
+     * @var Zend_Registry
+     */
+    protected $previousRegistry;
+    
+    /**
      * @var Ajgl_Controller_Action_Helper_Auth
      */
     protected $object;
@@ -39,6 +44,7 @@ class Ajgl_Controller_Action_Helper_AuthTest extends PHPUnit_Framework_TestCase 
      * This method is called before a test is executed.
      */
     protected function setUp() {
+        $this->previousRegistry = Zend_Registry::getInstance();
         Zend_Registry::_unsetInstance();
         $this->object = new Ajgl_Controller_Action_Helper_Auth;
     }
@@ -49,6 +55,9 @@ class Ajgl_Controller_Action_Helper_AuthTest extends PHPUnit_Framework_TestCase 
      */
     protected function tearDown() {
         Zend_Registry::_unsetInstance();
+        if (isset($this->previousRegistry)) {
+            Zend_Registry::setInstance($this->previousRegistry);
+        }
     }
 
     /**
