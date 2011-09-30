@@ -140,9 +140,13 @@ class Ajgl_Controller_Action_Helper_Auth
             } else {
                 $routeOptions = $this->getUnauthRouteOptions();
             }
-            
+
             $uri = $this->getRequest()->getRequestUri();
-            $returnUrl = urlencode($uri);
+            /**
+             * Base64 encoded to avoid an apache error with default config
+             * @see http://httpd.apache.org/docs/2.2/mod/core.html#allowencodedslashes
+             */
+            $returnUrl = urlencode(base64_encode($uri));
             $routeOptions[$this->getReturnParamName()] = $returnUrl;
             
             $redirector = $this->_actionController->getHelper('Redirector');
