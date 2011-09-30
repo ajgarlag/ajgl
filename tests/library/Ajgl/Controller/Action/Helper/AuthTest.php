@@ -46,7 +46,7 @@ class Ajgl_Controller_Action_Helper_AuthTest extends PHPUnit_Framework_TestCase 
     protected function setUp() {
         $this->previousRegistry = Zend_Registry::getInstance();
         Zend_Registry::_unsetInstance();
-        $this->object = new Ajgl_Controller_Action_Helper_Auth;
+        $this->object = new Ajgl_Controller_Action_Helper_Auth();
     }
 
     /**
