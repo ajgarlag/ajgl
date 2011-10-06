@@ -52,7 +52,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
     echo 'El DNI del DNI "'.$numero.'" es "'.$numero.letra_dni($numero).'"';
     */
     const MSG_INVALIDFORMAT = 'msgInvalidFormat';
-    const MSG_UNKNOWNERROR = 'msgUnknownError';
+    const MSG_UNKNOWNFORMAT = 'msgUnknownFormat';
     const MSG_DNINOTALLOWED = 'msgDniNotAllowed';
     const MSG_NIENOTALLOWED = 'msgNieNotAllowed';
     const MSG_CIFNOTALLOWED = 'msgCifNotAllowed';
@@ -62,7 +62,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
 
     protected $_messageTemplates = array(
         self::MSG_INVALIDFORMAT => "'%value%' has not a valid format",
-        self::MSG_UNKNOWNERROR  => "Unknown error",
+        self::MSG_UNKNOWNFORMAT  => "Unknown format",
         self::MSG_DNINOTALLOWED => "DNI values are not allowed",
         self::MSG_NIENOTALLOWED => "NIE values are not allowed",
         self::MSG_CIFNOTALLOWED => "CIF values are not allowed",
@@ -179,7 +179,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
             return true;
         }
         
-        $this->_error(self::MSG_UNKNOWNERROR);
+        $this->_error(self::MSG_UNKNOWNFORMAT);
         return false;
     }
 }
