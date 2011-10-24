@@ -24,7 +24,7 @@
 
 return array(
     // Ajgl_Validate_Es_DniNieCif
-    "'%value%' has not a valid format" => "'%value%' has not a valid format",
+    "'%value%' is not in a valid format" => "'%value%' is not in a valid format",
     "Unknown format" => "Unknown format",
     "DNI values are not allowed" => "DNI values are not allowed",
     "NIE values are not allowed" => "NIE values are not allowed",

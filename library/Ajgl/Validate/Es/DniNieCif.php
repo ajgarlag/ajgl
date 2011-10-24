@@ -61,7 +61,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
     const MSG_CIFINVALIDCHECKSUM = 'msgCifInvalidChecksum';
 
     protected $_messageTemplates = array(
-        self::MSG_INVALIDFORMAT => "'%value%' has not a valid format",
+        self::MSG_INVALIDFORMAT => "'%value%' is not in a valid format",
         self::MSG_UNKNOWNFORMAT  => "Unknown format",
         self::MSG_DNINOTALLOWED => "DNI values are not allowed",
         self::MSG_NIENOTALLOWED => "NIE values are not allowed",
