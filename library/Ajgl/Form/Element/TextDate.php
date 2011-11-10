@@ -41,7 +41,6 @@ class Ajgl_Form_Element_TextDate
     public function init()
     {
         $this->addValidator('Date');
-        $this->addFilter('Null', array(Zend_Filter_Null::STRING));
     }
 
     public function setValue($value) {
