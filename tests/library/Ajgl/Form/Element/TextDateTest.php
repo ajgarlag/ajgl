@@ -20,6 +20,8 @@ class Ajgl_Form_Element_TextDateTest
         $this->assertEquals('6/10/79', $this->_element->getValue()->get(Zend_Date::DATE_SHORT));
         $this->_element->setValue(null);
         $this->assertNull($this->_element->getValue());
+        $this->_element->setValue('');
+        $this->assertNull($this->_element->getValue());
     }
     
     public function testRender()
