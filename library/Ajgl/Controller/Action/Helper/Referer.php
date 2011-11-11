@@ -103,14 +103,20 @@ class Ajgl_Controller_Action_Helper_Referer
             if ($this->getRequest()->isGet()) {
                 if (!$this->getRequest()->isXmlHttpRequest()) {
                     if ($requestReferer = $this->getRequest()->getServer('HTTP_REFERER', null)) {
+                        $baseUrl = $this->getFrontController()->getBaseUrl();
                         $serverHelper = new Zend_View_Helper_ServerUrl();
-                        $serverUrl = $serverHelper->serverUrl();
+                        $serverUrl = $serverHelper->serverUrl($baseUrl);
                         if (strpos($requestReferer, $serverUrl) === 0) {
                             $requestReferer = substr($requestReferer, strlen($serverUrl));
                         } else {
                             $requestReferer = null;
                         }
-                        $uri = $this->getRequest()->getRequestUri();    
+                        
+                        $uri = $this->getRequest()->getRequestUri(); 
+                        if (strpos($uri, $baseUrl) === 0) {
+                            $uri = substr($uri, strlen($baseUrl));
+                        }
+                        
                         if ($uri != $requestReferer) {
                             $this->getSessionNamespace()->referer = $requestReferer;
                         }
