@@ -44,7 +44,7 @@ class Ajgl_Form_Element_TextDate
     }
 
     public function setValue($value) {
-        if (!$value instanceof Zend_Date) {
+        if (!empty($value) && !$value instanceof Zend_Date) {
             $value = new Zend_Date($value, Zend_Date::DATE_SHORT);
         }
         return parent::setValue($value);
