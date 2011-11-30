@@ -37,19 +37,19 @@ class Ajgl_Controller_Action_Helper_Referer
      * @var Zend_Session_Namespace
      */
     protected $_sessionNamespace;
-    
+
     /**
      * @param mixed array|Zend_Config
      */
     public function __construct($options = null)
     {
         if (null !== $options) {
-            $this->setOptions($options);    
+            $this->setOptions($options);
         }
     }
-    
+
     /**
-     * @param mixed array|Zend_Config $options 
+     * @param mixed array|Zend_Config $options
      * @return Ajgl_Action_Helper_History
      */
     public function setOptions($options)
@@ -57,13 +57,13 @@ class Ajgl_Controller_Action_Helper_Referer
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
-        
+
         if (!is_array($options)) {
             throw new Exception('Invalid options; must be array or Zend_Config object');
         }
-        
+
         $this->_options = $options;
-        
+
         foreach ($options as $k => $v) {
             $setter = 'set' . ucfirst($k);
             if (method_exists($this, $setter)) {
@@ -72,7 +72,7 @@ class Ajgl_Controller_Action_Helper_Referer
         }
         return $this;
     }
-    
+
     /**
      * @return Zend_Session_Namespace
      */
@@ -83,17 +83,17 @@ class Ajgl_Controller_Action_Helper_Referer
         }
         return $this->_sessionNamespace;
     }
-    
+
     /**
      * @param Zend_Session_Namespace $sessionNamespace
-     * @return Ajgl_Controller_Action_Helper_History 
+     * @return Ajgl_Controller_Action_Helper_History
      */
     public function setSessionNamespace(Zend_Session_Namespace $sessionNamespace)
     {
         $this->_sessionNamespace = $sessionNamespace;
         return $this;
     }
-    
+
     /**
      * Tracks the referer header
      */
@@ -111,12 +111,12 @@ class Ajgl_Controller_Action_Helper_Referer
                         } else {
                             $requestReferer = null;
                         }
-                        
-                        $uri = $this->getRequest()->getRequestUri(); 
-                        if (strpos($uri, $baseUrl) === 0) {
+
+                        $uri = $this->getRequest()->getRequestUri();
+                        if (strlen($baseUrl) && strpos($uri, $baseUrl) === 0) {
                             $uri = substr($uri, strlen($baseUrl));
                         }
-                        
+
                         if ($uri != $requestReferer) {
                             $this->getSessionNamespace()->referer = $requestReferer;
                         }
@@ -125,7 +125,7 @@ class Ajgl_Controller_Action_Helper_Referer
             }
         }
     }
-    
+
     /**
      * @param integer $steps
      * @param string $whereToGoIfNoHistory Url to go if there is no history step
