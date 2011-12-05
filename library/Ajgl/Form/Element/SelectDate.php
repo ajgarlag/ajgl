@@ -189,6 +189,8 @@ class Ajgl_Form_Element_SelectDate
             $this->setDay($dateArray['day'])
                 ->setMonth($dateArray['month'])
                 ->setYear($dateArray['year']);
+        } elseif($value === null) {
+            $this->setDay($value)->setMonth($value)->setYear($value);
         } else {
             throw new Exception('Invalid date value provided');
         }
@@ -197,7 +199,7 @@ class Ajgl_Form_Element_SelectDate
     }
 
     /**
-     * @return array
+     * @return mixed array|null
      */
     public function getValue()
     {
@@ -205,23 +207,32 @@ class Ajgl_Form_Element_SelectDate
     }
 
     /**
-     * @return array
+     * @return mixed array|null
      */
     public function getValueAsArray()
     {
-        return array(
-            'day' => $this->getDay(),
-            'month' => $this->getMonth(),
-            'year' => $this->getYear()
-        );
+        if (empty($this->_day) && empty($this->_month) && empty($this->_year)) {
+            return null;
+        } else {
+            return array(
+                'day' => $this->getDay(),
+                'month' => $this->getMonth(),
+                'year' => $this->getYear()
+            );
+        }
     }
 
     /**
-     * @return Zend_Date
+     * @return mixed Zend_Date|null
      */
     public function getValueAsZendDate()
     {
-        return new Zend_Date($this->getValueAsArray());
+        $dateArray = $this->getValueAsArray();
+        if ($dateArray === null) {
+            return null;
+        } else {
+            return new Zend_Date($dateArray);
+        }
     }
 
     /**
