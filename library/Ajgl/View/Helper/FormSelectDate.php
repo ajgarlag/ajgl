@@ -19,10 +19,13 @@ class Ajgl_View_Helper_FormSelectDate
         $dayAttribs = $monthAttribs = array_merge($attribs, array('size' => 2));
         $yearAttribs = array_merge($attribs, array('size' => 4));
 
+        $dayOptions = array(0 => '') + array_combine(range(1, 31), range(1, 31));
+        $monthOptions = array(0 => '') + array_combine(range(1, 12), range(1, 12));
+
         $html = '';
         if (!isset($attribs['readonly']) || $attribs['readonly'] == false) {
-            $html .= $this->view->formSelect($name.'[day]', $value['day'], $attribs, array_combine(range(1, 31), range(1,31)));
-            $html .= $this->view->formSelect($name.'[month]', $value['month'], $attribs, array_combine(range(1, 12), range(1,12)));
+            $html .= $this->view->formSelect($name.'[day]', $value['day'], $attribs, $dayOptions);
+            $html .= $this->view->formSelect($name.'[month]', $value['month'], $attribs, $monthOptions);
         } else {
             $html .= $this->view->formText($name.'[day]', $value['day'], $dayAttribs);
             $html .= $this->view->formText($name.'[month]', $value['month'], $monthAttribs);
