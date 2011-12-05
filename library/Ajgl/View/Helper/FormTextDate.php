@@ -1,5 +1,5 @@
 <?php
-class Ajgl_View_Helper_FormTextDate 
+class Ajgl_View_Helper_FormTextDate
     extends Zend_View_Helper_FormText
 {
     /**
