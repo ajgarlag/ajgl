@@ -37,34 +37,34 @@ class Ajgl_Form_Element_TextDate
      * @var string
      */
     public $helper = 'formTextDate';
-    
+
     public function init()
     {
-        $this->addValidator('Date');
+        $this->addValidator('Date', true, array('format' => Zend_Date::DATE_SHORT));
     }
 
-    public function setValue($value) {
-        if (!empty($value) && !$value instanceof Zend_Date) {
-            $value = new Zend_Date($value, Zend_Date::DATE_SHORT);
+    public function getValueAsZendDate() {
+        if (!empty($this->_value) && !$this->_value instanceof Zend_Date) {
+            return new Zend_Date($this->_value, Zend_Date::DATE_SHORT);
         }
-        return parent::setValue($value);
+        return null;
     }
-    
+
     /**
      * @param Zend_View_Interface $view
      * @return string
      */
     public function render(Zend_View_Interface $view = null) {
-        
+
         if (null !== $view) {
             $this->setView($view);
-            
+
         }
 
         if ($this->getView() instanceof Zend_View_Abstract) {
             $this->getView()->addHelperPath('Ajgl/View/Helper', 'Ajgl_View_Helper');
         }
-        
+
         return parent::render($view);
     }
 }

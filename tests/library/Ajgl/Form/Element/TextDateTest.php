@@ -6,22 +6,22 @@ class Ajgl_Form_Element_TextDateTest
      * @var Ajgl_Form_Element_TextDate
      */
     protected $_element;
-    
+
     public function setUp() {
         $this->_element = new Ajgl_Form_Element_TextDate('date');
     }
-    
-    public function testSetValue()
+
+    public function testGetValueAsZendDate()
     {
         $date = '6-10-1979';
         $this->_element->setValue($date);
-        $this->assertTrue($this->_element->getValue() instanceof Zend_Date);
-        $this->assertEquals('June', $this->_element->getValue()->get(Zend_Date::MONTH_NAME));
-        $this->assertEquals('6/10/79', $this->_element->getValue()->get(Zend_Date::DATE_SHORT));
+        $this->assertTrue($this->_element->getValueAsZendDate() instanceof Zend_Date);
+        $this->assertEquals('June', $this->_element->getValueAsZendDate()->get(Zend_Date::MONTH_NAME));
+        $this->assertEquals('6/10/79', $this->_element->getValueAsZendDate()->get(Zend_Date::DATE_SHORT));
         $this->_element->setValue(null);
-        $this->assertNull($this->_element->getValue());
+        $this->assertNull($this->_element->getValueAsZendDate());
     }
-    
+
     public function testRender()
     {
         $date = new Zend_Date(1234567890);
