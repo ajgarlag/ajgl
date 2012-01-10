@@ -130,10 +130,58 @@ class Ajgl_Controller_Action_Helper_Referer
      * @param integer $steps
      * @param string $whereToGoIfNoHistory Url to go if there is no history step
      */
-    public function goToReferer($whereToGoIfNoReferer = '/') {
+    public function goToReferer($whereToGoIfNoReferer = '/')
+    {
+
         if (!$url = $this->getSessionNamespace()->referer) {
             $url = $whereToGoIfNoReferer;
+        } elseif (!$this->isValidReferer($url)) {
+            $url = $whereToGoIfNoReferer;
         }
+
         $this->_actionController->getHelper('Redirector')->gotoUrl($url);
     }
+
+    /**
+     * Gets the array with de invalid referer urls
+     * @return array
+     */
+    protected function _getInvalidReferers()
+    {
+        if (!$invalidReferers = $this->getSessionNamespace()->invalidReferers) {
+            $invalidReferers = array();
+        }
+        return $invalidReferers;
+    }
+
+    /**
+     * Put in invalidReferers array an invalid referer url
+     * @param type $url
+     * @return Ajgl_Controller_Action_Helper_Referer
+     */
+    public function invalidateReferer($url)
+    {
+        $invalidReferers = $this->_getInvalidReferers();
+
+        if (!in_array($url, $invalidReferers)) {
+            $invalidReferers[] = $url;
+        }
+
+        $this->getSessionNamespace()->invalidReferers = $invalidReferers;
+
+        return $this;
+    }
+
+    /**
+     * Checks if an url is invalid (in referer context)
+     * @param $url
+     * @return boolean
+     */
+    public function isValidReferer($url)
+    {
+        $invalidReferers = $this->_getInvalidReferers();
+
+        return !in_array($url, $invalidReferers);
+    }
+
 }
