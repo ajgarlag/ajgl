@@ -29,7 +29,7 @@
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-interface Ajgl_Domain_Infraestructure_Exception {
+interface Ajgl_Domain_Infrastructure_Exception {
 
 }
 

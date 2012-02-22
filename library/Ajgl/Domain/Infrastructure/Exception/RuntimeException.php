@@ -31,7 +31,7 @@
  */
 class Ajgl_Domain_Infrastructure_Exception_RuntimeException
     extends RuntimeException
-    implements Ajgl_Domain_Infraestructure_Exception
+    implements Ajgl_Domain_Infrastructure_Exception
 {
 
 }
