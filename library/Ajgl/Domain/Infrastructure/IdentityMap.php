@@ -47,7 +47,7 @@ class Ajgl_Domain_Infrastructure_IdentityMap
      * @var array
      */
     protected $_idsMap = array();
-    
+
     /**
      * Adds an entity to the identity map
      * @param Ajgl_Domain_Infrastructure_EntityInterface $entity
@@ -56,7 +56,7 @@ class Ajgl_Domain_Infrastructure_IdentityMap
     public function add(Ajgl_Domain_Infrastructure_EntityInterface $entity)
     {
         if (!$entity->hasIdentity()) {
-            throw new Exception('The entity must have identity');
+            throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('The entity must have identity');
         }
         $id = $this->_stringfyId($entity->getIdentity());
         $oid = spl_object_hash($entity);
@@ -68,7 +68,7 @@ class Ajgl_Domain_Infrastructure_IdentityMap
 
         if (isset($this->_idsMap[$classname]) && isset($this->_idsMap[$classname][$id])) {
             if (!array_key_exists($oid, $this->_entitiesMap)) {
-                throw new Exception(
+                throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException(
                     'Another entity with the same identity exists in the identity map'
                 );
             }
@@ -76,7 +76,7 @@ class Ajgl_Domain_Infrastructure_IdentityMap
             $this->_idsMap[$classname][$id] = $oid;
             $this->_entitiesMap[$oid] = $entity;
         }
-        
+
         return $this;
     }
 
@@ -88,7 +88,7 @@ class Ajgl_Domain_Infrastructure_IdentityMap
     public function remove(Ajgl_Domain_Infrastructure_EntityInterface $entity)
     {
         if (!$entity->hasIdentity()) {
-            throw new Exception('The entity must have identity');
+            throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('The entity must have identity');
         }
         $id = $this->_stringfyId($entity->getIdentity());
         $oid = spl_object_hash($entity);
@@ -100,14 +100,14 @@ class Ajgl_Domain_Infrastructure_IdentityMap
 
         if (isset($this->_idsMap[$classname]) && isset($this->_idsMap[$classname][$id])) {
             if (!array_key_exists($oid, $this->_entitiesMap)) {
-                throw new Exception(
+                throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException(
                     'Another entity with the same identity exists in the identity map'
                 );
             }
             unset($this->_entitiesMap[$oid]);
             unset($this->_idsMap[$classname][$id]);
         }
-        
+
         return $this;
     }
 
@@ -124,11 +124,11 @@ class Ajgl_Domain_Infrastructure_IdentityMap
         $id = $this->_stringfyId($entity->getIdentity());
         $oid = spl_object_hash($entity);
         $classname = $entity->getRootClass();
-        
+
         if (array_key_exists($oid, $this->_entitiesMap)) {
             return true;
         } elseif (isset($this->_idsMap[$classname]) && isset($this->_idsMap[$classname][$id])) {
-            throw new Exception('Another entity with the same identity exists in the identity map');
+            throw new Ajgl_Domain_Infrastructure_Exception_RuntimeException('Another entity with the same identity exists in the identity map');
         } else {
             return false;
         }
@@ -136,7 +136,7 @@ class Ajgl_Domain_Infrastructure_IdentityMap
 
     /**
      * Checks if the entity identified by classname and ID exists
-     * 
+     *
      * @param string $classname
      * @param mixed $id
      * @return boolean
@@ -144,17 +144,17 @@ class Ajgl_Domain_Infrastructure_IdentityMap
     public function hasEntity($classname, $id)
     {
         $id = $this->_stringfyId($id);
-        
+
         if (isset($this->_idsMap[$classname]) && isset($this->_idsMap[$classname][$id])) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Returns the entity identified by classname and ID
-     * 
+     *
      * The given classname should be the root classname.
      * @param string $classname
      * @param mixed $id
@@ -163,18 +163,18 @@ class Ajgl_Domain_Infrastructure_IdentityMap
     public function getEntity($classname, $id)
     {
         $id = $this->_stringfyId($id);
-        
+
         if (isset($this->_idsMap[$classname]) && isset($this->_idsMap[$classname][$id])) {
             $oid = $this->_idsMap[$classname][$id];
             return $this->_entitiesMap[$oid];
         }
-  
-        throw new Exception('The required entity does not exists');
+
+        throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('The required entity does not exists');
     }
-    
+
     /**
      * Transforms the id to a plain string that can be used as array key
-     * @param mixed $id 
+     * @param mixed $id
      */
     protected function _stringfyId($id)
     {

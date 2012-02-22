@@ -38,7 +38,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      * @var array
      */
     protected $_properties;
-    
+
     public function getProperties()
     {
         if (!is_array($this->_properties)) {
@@ -52,7 +52,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
         }
         return $this->_properties;
     }
-    
+
     /**
      * Magic method to set a object property
      * @param string $name Name of the property
@@ -67,7 +67,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
             return $this->$method($value);
         } else {
             if (!in_array($name, $this->getProperties())) {
-               throw new Exception('Invalid property "' . $name . '"');
+               throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('Invalid property "' . $name . '"');
             }
             $this->$name = $value;
         }
@@ -87,7 +87,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
             return $this->$method();
         } else {
             if (!in_array($name, $this->getProperties())) {
-               throw new Exception('Invalid property "' . $name . '"');
+               throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('Invalid property "' . $name . '"');
             }
             return $this->$name;
         }
@@ -138,13 +138,13 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
         switch ($prefix) {
             case 'get':
                 if ($argc != 0) {
-                    throw new Exception("Calling a getter with $arc arguments. None allowed");
+                    throw new Ajgl_Domain_Infrastructure_Exception_BadMethodCallException("Calling a getter with $arc arguments. None allowed");
                 }
                 return $this->__get($property);
                 break;
             case 'set':
                 if ($argc != 1) {
-                    throw new Exception(
+                    throw new Ajgl_Domain_Infrastructure_Exception_BadMethodCallException(
                         "Calling a setter with $arc arguments. Only one argument allowed"
                     );
                 }
@@ -152,11 +152,11 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
                 return $this;
                 break;
             default:
-                throw new Exception("Calling a non get/set method that does not exist: $method");
+                throw new Ajgl_Domain_Infrastructure_Exception_BadMethodCallException("Calling a non get/set method that does not exist: $method");
                 break;
         }
     }
-    
+
     /**
      * Validate the property name
      * @param string $name
@@ -166,10 +166,10 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
     protected function _validatePropertyName($name)
     {
         if (!$this->_propertyNameIsValid($name)) {
-            throw new Exception("Invalid property name: '$name' given");
+            throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException("Invalid property name: '$name' given");
         }
     }
-    
+
     /**
      * Checks if the given property name is valid
      * @param string $name
@@ -182,14 +182,14 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
         }
         return false;
     }
-    
+
     /**
      * @return string
      */
     public function getRootClass() {
         return get_class($this);
     }
-    
+
     /**
      * Converts the object graph to an associative array
      * @return array
@@ -204,7 +204,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
         }
         return $data;
     }
-    
+
     /**
      * Gets an associative array representing the object graph and load it into objects
      * @param array $data
@@ -215,7 +215,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
         foreach ($data as $property => $value) {
             if ($value !== null) {
                 $method = 'set' . ucfirst($property);
-                $this->$method($value);    
+                $this->$method($value);
             } else {
                 $this->__unset($property);
             }
