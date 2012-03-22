@@ -16,20 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Domain\Infrastructure;
 
 /**
+ * Exception class
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-interface Ajgl_Domain_Infrastructure_Exception {
+interface Exception
+{
 
 }
 

@@ -16,41 +16,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Domain\Infrastructure;
+
+use Ajgl\Domain\Infrastructure\Exception;
 
 /**
  * Abstract entity class
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-abstract class Ajgl_Domain_Infrastructure_EntityAbstract
-    implements Ajgl_Domain_Infrastructure_EntityInterface
+abstract class EntityAbstract
+    implements EntityInterface
 {
     /**
      * Name of entity properties
      * @var array
      */
-    protected $_properties;
+    protected $properties;
 
     public function getProperties()
     {
-        if (!is_array($this->_properties)) {
-            $this->_properties = array();
+        if (!is_array($this->properties)) {
+            $this->properties = array();
             foreach (get_object_vars($this) as $property => $value) {
-                if ($this->_propertyNameIsValid($property)) {
-                    $this->_properties[] = $property;
+                if ($this->propertyNameIsValid($property)) {
+                    $this->properties[] = substr($property, 2);
                 }
             }
-            sort($this->_properties);
+            sort($this->properties);
         }
-        return $this->_properties;
+        return $this->properties;
     }
 
     /**
@@ -61,15 +64,16 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      */
     public function __set($name, $value)
     {
-        $this->_validatePropertyName($name);
+        $propname = '__' . $name;
+        $this->validatePropertyName($propname);
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method($value);
         } else {
             if (!in_array($name, $this->getProperties())) {
-               throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('Invalid property "' . $name . '"');
+               throw new Exception\InvalidArgumentException("Invalid property '$name'");
             }
-            $this->$name = $value;
+            $this->$propname = $value;
         }
         return $this;
     }
@@ -81,15 +85,16 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      */
     public function __get($name)
     {
-        $this->_validatePropertyName($name);
+        $propname = '__' . $name;
+        $this->validatePropertyName($propname);
         $method = 'get' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method();
         } else {
             if (!in_array($name, $this->getProperties())) {
-               throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException('Invalid property "' . $name . '"');
+               throw new Exception\InvalidArgumentException("Invalid property '$name'");
             }
-            return $this->$name;
+            return $this->$propname;
         }
     }
 
@@ -100,8 +105,12 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      */
     public function __isset($name)
     {
-        $this->_validatePropertyName($name);
-        return isset($this->$name);
+        if (!in_array($name, $this->getProperties())) {
+            return false;
+        }
+        $propname = '__' . $name;
+        $this->validatePropertyName($propname);
+        return isset($this->$propname);
     }
 
     /**
@@ -111,9 +120,10 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      */
     public function __unset($name)
     {
-        $this->_validatePropertyName($name);
-        if (isset($this->$name)) {
-            $this->$name = null;
+        $propname = '__' . $name;
+        $this->validatePropertyName($propname);
+        if (isset($this->$propname)) {
+            $this->$propname = null;
         }
     }
 
@@ -138,21 +148,21 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
         switch ($prefix) {
             case 'get':
                 if ($argc != 0) {
-                    throw new Ajgl_Domain_Infrastructure_Exception_BadMethodCallException("Calling a getter with $arc arguments. None allowed");
+                    throw new Exception\BadMethodCallException("Calling a getter with $argc arguments. None allowed");
                 }
                 return $this->__get($property);
                 break;
             case 'set':
                 if ($argc != 1) {
-                    throw new Ajgl_Domain_Infrastructure_Exception_BadMethodCallException(
-                        "Calling a setter with $arc arguments. Only one argument allowed"
+                    throw new Exception\BadMethodCallException(
+                        "Calling a setter with $argc arguments. Only one argument allowed"
                     );
                 }
                 $this->__set($property, current($arguments));
                 return $this;
                 break;
             default:
-                throw new Ajgl_Domain_Infrastructure_Exception_BadMethodCallException("Calling a non get/set method that does not exist: $method");
+                throw new Exception\BadMethodCallException("Calling a non get/set method that does not exist: $method");
                 break;
         }
     }
@@ -163,10 +173,10 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      * @return void
      * @throws Exception
      */
-    protected function _validatePropertyName($name)
+    protected function validatePropertyName($name)
     {
-        if (!$this->_propertyNameIsValid($name)) {
-            throw new Ajgl_Domain_Infrastructure_Exception_InvalidArgumentException("Invalid property name: '$name' given");
+        if (!$this->propertyNameIsValid($name)) {
+            throw new Exception\InvalidArgumentException("Invalid property name: '$name' given");
         }
     }
 
@@ -175,9 +185,9 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
      * @param string $name
      * @return boolean
      */
-    protected function _propertyNameIsValid($name)
+    protected function propertyNameIsValid($name)
     {
-        if (is_string($name) && strlen($name) > 0 && preg_match('/[a-z]{1,1}/', $name[0])) {
+        if (is_string($name) && strlen($name) > 0 && strpos($name, '__') === 0) {
             return true;
         }
         return false;
@@ -208,7 +218,7 @@ abstract class Ajgl_Domain_Infrastructure_EntityAbstract
     /**
      * Gets an associative array representing the object graph and load it into objects
      * @param array $data
-     * @return Ajgl_Domain_Infrastructure_EntityAbstract
+     * @return EntityAbstract
      */
     public function fromArray(array $data)
     {

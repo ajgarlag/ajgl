@@ -17,59 +17,60 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Domain\Infrastructure;
 
 /**
  * Identity Map interface
  *
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-interface Ajgl_Domain_Infrastructure_IdentityMapInterface
+interface IdentityMapInterface
 {
     /**
      * Adds an entity to the identity map
-     * @param Ajgl_Domain_Infrastructure_EntityInterface $entity
-     * @return Ajgl_Domain_Infrastructure_IdentityMapInterface
+     * @param EntityInterface $entity
+     * @return IdentityMapInterface
      */
-    public function add(Ajgl_Domain_Infrastructure_EntityInterface $entity);
+    public function add(EntityInterface $entity);
 
     /**
      * Removes an entity from the identity map
-     * @param Ajgl_Domain_Infrastructure_EntityInterface $entity
-     * @return Ajgl_Domain_Infrastructure_IdentityMapInterface
+     * @param EntityInterface $entity
+     * @return IdentityMapInterface
      */
-    public function remove(Ajgl_Domain_Infrastructure_EntityInterface $entity);
+    public function remove(EntityInterface $entity);
 
     /**
      * Checks if the given exists in the identity map
-     * @param Ajgl_Domain_Infrastructure_EntityInterface $entity
+     * @param EntityInterface $entity
      * @return boolean
      */
-    public function exists(Ajgl_Domain_Infrastructure_EntityInterface $entity);
+    public function exists(EntityInterface $entity);
 
     /**
      * Checks if the entity identified by classname and ID exists
-     * 
+     *
      * @param string $classname
      * @param mixed $id
      * @return boolean
      */
     public function hasEntity($classname, $id);
-    
+
     /**
      * Returns the entity identified by classname and ID
-     * 
+     *
      * @param string $classname
      * @param mixed $id
-     * @return Ajgl_Domain_Infrastructure_EntityInterface
+     * @return EntityInterface
      */
     public function getEntity($classname, $id);
 }

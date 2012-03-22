@@ -16,176 +16,177 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Domain
- * @subpackage UnitTests
+ * @package    Ajgl\Domain
+ * @subpackage Infrastructure\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-
+namespace Ajgl\Domain\Infrastructure;
 /**
  * Abstract identity map tests
- * 
+ *
  * @category   Ajgl
- * @package    Ajgl_Domain
- * @subpackage UnitTests
+ * @package    Ajgl\Domain
+ * @subpackage Infrastructure\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Domain_Infrastructure_IdentityMapTest extends PHPUnit_Framework_TestCase
+class IdentityMapTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Ajgl_Domain_Infrastructure_IdentityMap
      */
-    protected $_identityMap;
-    
+    protected $identityMap;
+
     public function setUp()
     {
-        $this->_identityMap = new Ajgl_Domain_Infrastructure_IdentityMap();
+        $this->identityMap = new IdentityMap();
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Domain\Infrastructure\Exception\InvalidArgumentException
      * @expectedExceptionMessage The entity must have identity
      */
     public function testAddFailsIfNoIdentity()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
-        $this->_identityMap->add($e);
+        $e = new Foo();
+        $this->identityMap->add($e);
     }
-    
+
     public function testAdd()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
+        $e = new Foo();
         $e->setId(uniqid());
-        $this->assertSame($this->_identityMap, $this->_identityMap->add($e));
-        $this->assertTrue($this->_identityMap->exists($e));
+        $this->assertSame($this->identityMap, $this->identityMap->add($e));
+        $this->assertTrue($this->identityMap->exists($e));
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Domain\Infrastructure\Exception\InvalidArgumentException
      * @expectedExceptionMessage Another entity with the same identity exists in the identity map
      */
     public function testAddFailsOnTwoDifferentInstancesWithTheSameIdentity()
     {
-        $e1 = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
+        $e1 = new Foo();
         $e1->setId(uniqid());
-        $e2 = new Ajgl_Domain_Infrastructure_IdentityMapTest_Bar();
+        $e2 = new Bar();
         $e2->setId($e1->getIdentity());
-        $this->_identityMap->add($e1);
-        $this->_identityMap->add($e2);
+        $this->identityMap->add($e1);
+        $this->identityMap->add($e2);
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Domain\Infrastructure\Exception\InvalidArgumentException
      * @expectedExceptionMessage The entity must have identity
      */
     public function testRemoveFailsIfNoIdentity()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
-        $this->_identityMap->remove($e);
+        $e = new Foo();
+        $this->identityMap->remove($e);
     }
-    
+
     public function testRemove()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
+        $e = new Foo();
         $e->setId(uniqid());
-        $this->assertSame($this->_identityMap, $this->_identityMap->add($e));
-        $this->assertTrue($this->_identityMap->exists($e));
-        $this->assertSame($this->_identityMap, $this->_identityMap->remove($e));
-        $this->assertFalse($this->_identityMap->exists($e));
+        $this->assertSame($this->identityMap, $this->identityMap->add($e));
+        $this->assertTrue($this->identityMap->exists($e));
+        $this->assertSame($this->identityMap, $this->identityMap->remove($e));
+        $this->assertFalse($this->identityMap->exists($e));
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Domain\Infrastructure\Exception\InvalidArgumentException
      * @expectedExceptionMessage Another entity with the same identity exists in the identity map
      */
     public function testRemoveFailsOnTwoDifferentInstancesWithTheSameIdentity()
     {
-        $e1 = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
+        $e1 = new Foo();
         $e1->setId(uniqid());
-        $e2 = new Ajgl_Domain_Infrastructure_IdentityMapTest_Bar();
+        $e2 = new Bar();
         $e2->setId($e1->getIdentity());
-        $this->_identityMap->add($e1);
-        $this->_identityMap->remove($e2);
+        $this->identityMap->add($e1);
+        $this->identityMap->remove($e2);
     }
-    
+
     public function testExists()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
-        $this->assertFalse($this->_identityMap->exists($e));
+        $e = new Foo();
+        $this->assertFalse($this->identityMap->exists($e));
         $e->setId(uniqid());
-        $this->assertFalse($this->_identityMap->exists($e));
-        $this->_identityMap->add($e);
-        $this->assertTrue($this->_identityMap->exists($e));
-        $this->_identityMap->remove($e);
-        $this->assertFalse($this->_identityMap->exists($e));
+        $this->assertFalse($this->identityMap->exists($e));
+        $this->identityMap->add($e);
+        $this->assertTrue($this->identityMap->exists($e));
+        $this->identityMap->remove($e);
+        $this->assertFalse($this->identityMap->exists($e));
     }
 
     public function testHasEntity()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Bar();
+        $e = new Bar();
         $id = uniqid();
         $e->setId($id);
-        $this->assertFalse($this->_identityMap->hasEntity($e->getRootClass(), $id));
-        $this->_identityMap->add($e);
-        $this->assertTrue($this->_identityMap->hasEntity($e->getRootClass(), $id));
+        $this->assertFalse($this->identityMap->hasEntity($e->getRootClass(), $id));
+        $this->identityMap->add($e);
+        $this->assertTrue($this->identityMap->hasEntity($e->getRootClass(), $id));
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Domain\Infrastructure\Exception\InvalidArgumentException
      * @expectedExceptionMessage The required entity does not exists
      */
     public function testGetEntityFailsIfNoEntity()
     {
-        $e = new Ajgl_Domain_Infrastructure_IdentityMapTest_Bar();
+        $e = new Bar();
         $id = uniqid();
-        $this->_identityMap->getEntity($e->getRootClass(), $id);
+        $this->identityMap->getEntity($e->getRootClass(), $id);
     }
-    
+
     public function testGet()
     {
-        $e1 = new Ajgl_Domain_Infrastructure_IdentityMapTest_Foo();
+        $e1 = new Foo();
         $id1 = uniqid();
         $e1->setId($id1);
-        $this->_identityMap->add($e1);
+        $this->identityMap->add($e1);
 
-        $e2 = new Ajgl_Domain_Infrastructure_IdentityMapTest_Bar();
+        $e2 = new Bar();
         $id2 = uniqid();
         $e2->setId($id2);
-        $this->_identityMap->add($e2);
+        $this->identityMap->add($e2);
 
-        $this->assertTrue($this->_identityMap->exists($e1));
-        $this->assertTrue($this->_identityMap->exists($e2));
+        $this->assertTrue($this->identityMap->exists($e1));
+        $this->assertTrue($this->identityMap->exists($e2));
 
-        $this->assertSame($e1, $this->_identityMap->getEntity($e1->getRootClass(), $e1->getId()));
-        $this->assertSame($e2, $this->_identityMap->getEntity($e2->getRootClass(), $e2->getId()));
+        $this->assertSame($e1, $this->identityMap->getEntity($e1->getRootClass(), $e1->getId()));
+        $this->assertSame($e2, $this->identityMap->getEntity($e2->getRootClass(), $e2->getId()));
         $this->assertNotEquals(get_class($e1), get_class($e2));
     }
 }
 
-class Ajgl_Domain_Infrastructure_IdentityMapTest_Foo
-    extends Ajgl_Domain_Infrastructure_EntityAbstract
+class Foo
+    extends EntityAbstract
 {
-    protected $id;
-    
+    protected $__id;
+
     public function  getRootClass()
     {
         return __CLASS__;
     }
-    
+
     public function hasIdentity()
     {
         return $this->__isset('id');
     }
-    
+
     public function getIdentity()
     {
         return $this->getId();
     }
 }
 
-class Ajgl_Domain_Infrastructure_IdentityMapTest_Bar
-    extends Ajgl_Domain_Infrastructure_IdentityMapTest_Foo
+class Bar
+    extends Foo
 {
 
 }

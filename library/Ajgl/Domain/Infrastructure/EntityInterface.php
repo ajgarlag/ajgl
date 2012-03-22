@@ -16,56 +16,58 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Domain\Infrastructure;
 
 /**
  * Entity interface
  * @category   Ajgl
- * @package    Ajgl_Domain
+ * @package    Ajgl\Domain
  * @subpackage Infrastructure
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-interface Ajgl_Domain_Infrastructure_EntityInterface {
+interface EntityInterface
+{
     /**
      * Returns true if the entity has identity
      * @return boolean
      */
     public function hasIdentity();
-    
+
     /**
      * Returns the entity identity
      * @return mixed
      * @throws Exception if no identity
      */
     public function getIdentity();
-    
+
     /**
      * Returns the entity properties
      * @return array
      */
     public function getProperties();
-    
+
     /**
      * Returns the root class name
      * @return string
      */
     public function getRootClass();
-    
+
     /**
      * Returns an associative array of properties and values
      * @return array
      */
     public function toArray();
-    
+
     /**
      * Loads the properties values from an associative array of values
      * @param array $data
-     * @return Ajgl_Domain_Infrastructure_EntityInterface
+     * @return EntityInterface
      */
     public function fromArray(array $data);
 }
