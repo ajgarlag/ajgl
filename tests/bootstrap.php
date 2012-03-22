@@ -16,6 +16,7 @@ $zfa = Zend_Loader_Autoloader::getInstance();
 Zend_Registry::set('Zend_Locale', new Zend_Locale('en'));
 
 $zfa->registerNamespace('Ajgl_');
+$zfa->registerNamespace('Ajgl\\');
 
 require_once "Doctrine/Common/ClassLoader.php";
 $autoloader = array(new \Doctrine\Common\ClassLoader('Doctrine'), 'loadClass');

@@ -16,38 +16,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Acl
+ * @package    Ajgl\Acl
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Acl;
 
 /**
  * Acl class
  * @category   Ajgl
- * @package    Ajgl_Acl
+ * @package    Ajgl\Acl
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Acl
-    extends Zend_Acl
+class Acl
+    extends \Zend_Acl
 {
     /**
-     * Load roles, resources an permissions definitions from a Zend_Config object
-     * @param Zend_Config $config 
-     * @return Ajgl_Acl
+     * Load roles, resources an permissions definitions from a \Zend_Config object
+     * @param \Zend_Config $config
+     * @return Acl
      */
-    public function loadConfig(Zend_Config $config)
+    public function loadConfig(\Zend_Config $config)
     {
-        $this->_loadRoles($config->roles);
-        $this->_loadResources($config->resources);
-        $this->_loadPermissions($config->permissions);
+        $this->loadRoles($config->roles);
+        $this->loadResources($config->resources);
+        $this->loadPermissions($config->permissions);
         return $this;
     }
-    
+
     /**
-     * @param Zend_Config $roles 
+     * @param \Zend_Config $roles
      */
-    protected function _loadRoles(Zend_Config $roles)
+    protected function loadRoles(\Zend_Config $roles)
     {
         foreach ($roles as $role => $parentRoles) {
             if (empty($parentRoles)) {
@@ -60,9 +61,9 @@ class Ajgl_Acl
     }
 
     /**
-     * @param Zend_Config $resources 
+     * @param \Zend_Config $resources
      */
-    protected function _loadResources(Zend_Config $resources)
+    protected function loadResources(\Zend_Config $resources)
     {
         foreach ($resources as $resource => $parentResource) {
             if (empty($parentResource)) {
@@ -73,9 +74,9 @@ class Ajgl_Acl
     }
 
     /**
-     * @param Zend_Config $permissions 
+     * @param \Zend_Config $permissions
      */
-    protected function _loadPermissions(Zend_Config $permissions)
+    protected function loadPermissions(\Zend_Config $permissions)
     {
         foreach ($permissions as $permission => $resources) {
             foreach ($resources as $resource => $privileges) {

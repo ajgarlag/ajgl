@@ -16,35 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Acl
- * @subpackage UnitTests
+ * @package    Ajgl\Acl
+ * @subpackage Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Acl;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Acl
- * @subpackage UnitTests
+ * @package    Ajgl\Acl
+ * @subpackage Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_AclTest
-    extends PHPUnit_Framework_TestCase
+class AclTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Zend_Config
+     * @var \Zend_Config
      */
-    protected $_config;
-    
+    protected $config;
+
     /**
-     * @var Ajgl_Acl
+     * @var Acl
      */
-    protected $_acl;
-    
+    protected $acl;
+
     public function setUp()
     {
-        $this->_config = new Zend_Config(
+        $this->config = new \Zend_Config(
             array(
                 'roles' => array(
                     'guest' => null,
@@ -84,34 +85,34 @@ class Ajgl_AclTest
                 )
             )
         );
-        $this->_acl = new Ajgl_Acl();
+        $this->acl = new Acl();
     }
-    
+
     public function testLoadConfig()
     {
-        $this->assertSame($this->_acl, $this->_acl->loadConfig($this->_config));
-        
-        foreach ($this->_config->roles as $role => $parentRoles) {
-            $this->assertTrue($this->_acl->hasRole($role));
+        $this->assertSame($this->acl, $this->acl->loadConfig($this->config));
+
+        foreach ($this->config->roles as $role => $parentRoles) {
+            $this->assertTrue($this->acl->hasRole($role));
             if (!empty($parentRoles)) {
                 if (is_scalar($parentRoles)) {
-                    $this->assertTrue($this->_acl->inheritsRole($role, $parentRoles));
+                    $this->assertTrue($this->acl->inheritsRole($role, $parentRoles));
                 } else {
                     foreach ($parentRoles as $parentRole) {
-                        $this->assertTrue($this->_acl->inheritsRole($role, $parentRole));
+                        $this->assertTrue($this->acl->inheritsRole($role, $parentRole));
                     }
                 }
             }
         }
-        
-        foreach ($this->_config->resources as $resource => $parentResource) {
-            $this->assertTrue($this->_acl->has($resource));
+
+        foreach ($this->config->resources as $resource => $parentResource) {
+            $this->assertTrue($this->acl->has($resource));
             if (!empty($parentResource)) {
-                $this->assertTrue($this->_acl->inherits($resource, $parentResource));
+                $this->assertTrue($this->acl->inherits($resource, $parentResource));
             }
         }
-        
-        foreach ($this->_config->permissions as $permission => $resources) {
+
+        foreach ($this->config->permissions as $permission => $resources) {
             $method = '_assert' . $permission;
             foreach ($resources as $resource => $privileges) {
                 if (empty($privileges)) {
@@ -134,15 +135,15 @@ class Ajgl_AclTest
             }
         }
     }
-    
+
     protected function _assertallow($role = null, $resource = null, $privilege = null)
     {
-        $this->assertTrue($this->_acl->isAllowed($role, $resource, $privilege));
+        $this->assertTrue($this->acl->isAllowed($role, $resource, $privilege));
     }
-    
+
     protected function _assertdeny($role = null, $resource = null, $privilege = null)
     {
-        $this->assertFalse($this->_acl->isAllowed($role, $resource, $privilege));
+        $this->assertFalse($this->acl->isAllowed($role, $resource, $privilege));
     }
-    
+
 }
