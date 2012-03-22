@@ -17,25 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Validate
- * @subpackage UnitTests
+ * @package    Ajgl\Validate
+ * @subpackage Es\Tests
  * @copyright  Copyright (C) 2009-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/gpl-3.0.html GPLv3
  */
+namespace Ajgl\Validate\Es;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Validate
- * @subpackage UnitTests
+ * @package    Ajgl\Validate
+ * @subpackage Es\Tests
  * @copyright  Copyright (C) 2009-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @copyright  Copyright (C) 2005-2008 David Vidal Serra
  * @license    http://www.fsf.org/licensing/licenses/gpl-3.0.html GPLv3
  * @see        http://www.bulma.net/impresion.phtml?nIdNoticia=2248
  */
-class Ajgl_Validate_Es_DniNieCifTest extends PHPUnit_Framework_TestCase
+class DniNieCifTest
+    extends \PHPUnit_Framework_TestCase
 {
 
-    protected $_validDnis = array(
+    protected $validDnis = array(
         '44055333Y',
         '84085859K',
         '21873322T',
@@ -47,8 +49,8 @@ class Ajgl_Validate_Es_DniNieCifTest extends PHPUnit_Framework_TestCase
         '64932327S',
         '81532270F'
     );
-    
-    protected $_validNies = array(
+
+    protected $validNies = array(
         'Y7313897A',
         'Z6141300Y',
         'X7972230Q',
@@ -60,8 +62,8 @@ class Ajgl_Validate_Es_DniNieCifTest extends PHPUnit_Framework_TestCase
         'Y5742304T',
         'Y0739675D'
     );
-    
-    protected $_validCifs = array(
+
+    protected $validCifs = array(
         'D31055031',
         'S4045121C',
         'F83338459',
@@ -73,55 +75,55 @@ class Ajgl_Validate_Es_DniNieCifTest extends PHPUnit_Framework_TestCase
         'S9281814E',
         'M07415680'
     );
-    
+
     public function testDniNieCif() {
-        $v = new Ajgl_Validate_Es_DniNieCif();
-        foreach ($this->_validDnis as $dni) {
+        $v = new DniNieCif();
+        foreach ($this->validDnis as $dni) {
             $this->assertTrue($v->isValid($dni));
         }
-        foreach ($this->_validNies as $nie) {
+        foreach ($this->validNies as $nie) {
             $this->assertTrue($v->isValid($nie));
         }
-        foreach ($this->_validCifs as $cif) {
+        foreach ($this->validCifs as $cif) {
             $this->assertTrue($v->isValid($cif));
         }
     }
 
     public function testDisallowDni() {
-        $v = new Ajgl_Validate_Es_DniNieCif(false, true, true);
-        foreach ($this->_validDnis as $dni) {
+        $v = new DniNieCif(false, true, true);
+        foreach ($this->validDnis as $dni) {
             $this->assertFalse($v->isValid($dni));
         }
-        foreach ($this->_validNies as $nie) {
+        foreach ($this->validNies as $nie) {
             $this->assertTrue($v->isValid($nie));
         }
-        foreach ($this->_validCifs as $cif) {
+        foreach ($this->validCifs as $cif) {
             $this->assertTrue($v->isValid($cif));
         }
     }
 
     public function testDisallowNie() {
-        $v = new Ajgl_Validate_Es_DniNieCif(true, false, true);
-        foreach ($this->_validDnis as $dni) {
+        $v = new DniNieCif(true, false, true);
+        foreach ($this->validDnis as $dni) {
             $this->assertTrue($v->isValid($dni));
         }
-        foreach ($this->_validNies as $nie) {
+        foreach ($this->validNies as $nie) {
             $this->assertFalse($v->isValid($nie));
         }
-        foreach ($this->_validCifs as $cif) {
+        foreach ($this->validCifs as $cif) {
             $this->assertTrue($v->isValid($cif));
         }
     }
 
     public function testDisallowCif() {
-        $v = new Ajgl_Validate_Es_DniNieCif(true, true, false);
-        foreach ($this->_validDnis as $dni) {
+        $v = new DniNieCif(true, true, false);
+        foreach ($this->validDnis as $dni) {
             $this->assertTrue($v->isValid($dni));
         }
-        foreach ($this->_validNies as $nie) {
+        foreach ($this->validNies as $nie) {
             $this->assertTrue($v->isValid($nie));
         }
-        foreach ($this->_validCifs as $cif) {
+        foreach ($this->validCifs as $cif) {
             $this->assertFalse($v->isValid($cif));
         }
     }

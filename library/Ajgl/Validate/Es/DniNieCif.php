@@ -17,26 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Validate
+ * @package    Ajgl\Validate
+ * @subpackage Es
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Validate\Es;
 
 /**
  * Validate Spanish fiscal Ids
  *
  * @category   Ajgl
- * @package    Ajgl_Validate
+ * @package    Ajgl\Validate
+ * @subpackage Es
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  * @see        http://es.wikibooks.org/wiki/Algoritmo_para_obtener_la_letra_del_NIF#PHP
  * @see        http://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal#Rutinas_de_c.C3.A1lculo
  */
-class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
+class DniNieCif
+    extends \Zend_Validate_Abstract
 {
     const CHECKSUM_DNI = 'TRWAGMYFPDXBNJZSQVHLCKE';
     const CHECKSUM_CIF = 'JABCDEFGHIJ';
-    
+
     const PATTERN_GLOBAL = '/((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)/';
     const PATTERN_DNI = '/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/';
     const PATTERN_NIE = '/^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/';
@@ -44,11 +48,11 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
     const PATTERN_CIF = '/^[ABCDEFGHJKLMNPRQSUVW][0-9]{7}[0-9ABCDEFGHIJ]/';
     /*
       $numero = "12345678"; //asignación del número de DNI
- 
+
     function letra_dni($dni) {
         return substr("TRWAGMYFPDXBNJZSQVHLCKE",strtr($dni,"XYZ","012")%23,1);
     }
- 
+
     echo 'El DNI del DNI "'.$numero.'" es "'.$numero.letra_dni($numero).'"';
     */
     const MSG_INVALIDFORMAT = 'msgInvalidFormat';
@@ -60,7 +64,10 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
     const MSG_NIEINVALIDCHECKSUM = 'msgNieInvalidChecksum';
     const MSG_CIFINVALIDCHECKSUM = 'msgCifInvalidChecksum';
 
-    protected $_messageTemplates = array(
+    /**
+     * @var array
+     */
+    protected $messageTemplates = array(
         self::MSG_INVALIDFORMAT => "'%value%' is not in a valid format",
         self::MSG_UNKNOWNFORMAT  => "Unknown format",
         self::MSG_DNINOTALLOWED => "DNI values are not allowed",
@@ -71,20 +78,43 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
         self::MSG_CIFINVALIDCHECKSUM => "CIF checksum invalid",
     );
 
-    private $_allowDni;
-    private $_allowNie;
-    private $_allowCif;
+    /**
+     * @var boolean
+     */
+    private $allowDni;
 
+    /**
+     * @var boolean
+     */
+    private $allowNie;
+
+    /**
+     * @var boolean
+     */
+    private $allowCif;
+
+    /**
+     * Class constructor
+     *
+     * @param boolean $allowDni
+     * @param boolean $allowNie
+     * @param boolean $allowCif
+     */
     public function __construct($allowDni = true, $allowNie = true, $allowCif = true)
     {
-        $this->_allowDni = $allowDni;
-        $this->_allowNie = $allowNie;
-        $this->_allowCif = $allowCif;
+        $this->allowDni = $allowDni;
+        $this->allowNie = $allowNie;
+        $this->allowCif = $allowCif;
+        $this->_messageTemplates = $this->messageTemplates;
     }
 
+    /**
+     * @param string $value
+     * @return boolean
+     */
     public function isValid($value)
     {
-        $this->_setValue($value);
+        $this->_setValue((string)$value);
 
         if (!preg_match(self::PATTERN_GLOBAL, $value)) {
             $this->_error(self::MSG_INVALIDFORMAT);
@@ -92,7 +122,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
         }
 
         if (preg_match(self::PATTERN_DNI, $value)) {
-            if (!$this->_allowDni) {
+            if (!$this->allowDni) {
                 $this->_error(self::MSG_DNINOTALLOWED);
                 return false;
             }
@@ -103,9 +133,9 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
             $this->_error(self::MSG_DNIINVALIDCHECKSUM);
             return false;
         }
-        
+
         if (preg_match(self::PATTERN_NIE, $value)) {
-            if (!$this->_allowNie) {
+            if (!$this->allowNie) {
                 $this->_error(self::MSG_NIENOTALLOWED);
                 return false;
             }
@@ -116,9 +146,9 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
             $this->_error(self::MSG_NIEINVALIDCHECKSUM);
             return false;
         }
-        
+
         if (preg_match(self::PATTERN_NIEWITHOUCHECKSUM, $value)) {
-            if (!$this->_allowNie) {
+            if (!$this->allowNie) {
                 $this->_error(self::MSG_NIENOTALLOWED);
                 return false;
             }
@@ -126,7 +156,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
         }
 
         if (preg_match(self::PATTERN_CIF, $value)) {
-            if (!$this->_allowCif) {
+            if (!$this->allowCif) {
                 $this->_error(self::MSG_CIFNOTALLOWED);
                 return false;
             }
@@ -139,7 +169,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
             for ($i = 1; $i < 6; $i = $i + 2) {
                 $evens = $evens + $identifier[$i];
             }
-            
+
             for ($i = 0; $i < 7; $i = $i + 2) {
                 $partialOdd = 2 * $identifier[$i];
                 $partialOdd = ($partialOdd > 9)?$partialOdd - 9:$partialOdd;
@@ -149,7 +179,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
             $control = (10 - (($odds+$evens) % 10));
             $control = ($control == 10)?0:$control;
             $controlLetter = substr(self::CHECKSUM_CIF, $control, 1);
-            
+
             switch ($type) {
                 case 'K':
                 case 'P':
@@ -178,7 +208,7 @@ class Ajgl_Validate_Es_DniNieCif extends Zend_Validate_Abstract
             }
             return true;
         }
-        
+
         $this->_error(self::MSG_UNKNOWNFORMAT);
         return false;
     }
