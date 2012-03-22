@@ -16,62 +16,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_CriterionAbstractTest
-    extends PHPUnit_Framework_TestCase
+class CriterionAbstractTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Criteria_Criterion_CriterionAbstract
+     * @var CriterionAbstract
      */
-    protected $_criterion;
-    
+    protected $criterion;
+
     public function setUp()
     {
-        $this->_criterion = new Ajgl_Criteria_Criterion_CriterionAbstractTest_Criterion();
+        $this->criterion = new CriterionAbstractImplementation();
     }
-    
+
     public function testAddAnd()
     {
-        $criterion = $this->getMock('Ajgl_Criteria_Criterion_CriterionAbstract');
-        $resCriterion = $this->_criterion->addAnd($criterion);
-        $this->assertTrue($resCriterion instanceof Ajgl_Criteria_Criterion_Logical);
-        $this->assertEquals(Ajgl_Criteria_Criterion_CriterionAbstract::BOOL_AND, $resCriterion->getSymbol());
+        $criterion = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
+        $resCriterion = $this->criterion->addAnd($criterion);
+        $this->assertTrue($resCriterion instanceof Logical);
+        $this->assertEquals(CriterionAbstract::BOOL_AND, $resCriterion->getSymbol());
         $this->assertEquals(2, count($resCriterion->getCriterions()));
-        $this->assertSame($this->_criterion, current($resCriterion->getCriterions()));
+        $this->assertSame($this->criterion, current($resCriterion->getCriterions()));
     }
-    
+
     public function testAddOr()
     {
-        $criterion = $this->getMock('Ajgl_Criteria_Criterion_CriterionAbstract');
-        $resCriterion = $this->_criterion->addOr($criterion);
-        $this->assertTrue($resCriterion instanceof Ajgl_Criteria_Criterion_Logical);
-        $this->assertEquals(Ajgl_Criteria_Criterion_CriterionAbstract::BOOL_OR, $resCriterion->getSymbol());
+        $criterion = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
+        $resCriterion = $this->criterion->addOr($criterion);
+        $this->assertTrue($resCriterion instanceof Logical);
+        $this->assertEquals(CriterionAbstract::BOOL_OR, $resCriterion->getSymbol());
         $this->assertEquals(2, count($resCriterion->getCriterions()));
-        $this->assertSame($this->_criterion, current($resCriterion->getCriterions()));
+        $this->assertSame($this->criterion, current($resCriterion->getCriterions()));
     }
-    
+
     public function testNegate()
     {
-        $resCriterion = $this->_criterion->negate();
-        $this->assertTrue($resCriterion instanceof Ajgl_Criteria_Criterion_Not);
-        $this->assertSame($this->_criterion, $resCriterion->getInnerCriterion());
+        $resCriterion = $this->criterion->negate();
+        $this->assertTrue($resCriterion instanceof Not);
+        $this->assertSame($this->criterion, $resCriterion->getInnerCriterion());
     }
 }
 
-class Ajgl_Criteria_Criterion_CriterionAbstractTest_Criterion
-    extends Ajgl_Criteria_Criterion_CriterionAbstract
+class CriterionAbstractImplementation
+    extends CriterionAbstract
 {
-    
+
 }

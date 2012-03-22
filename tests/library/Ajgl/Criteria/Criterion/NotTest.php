@@ -16,41 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_NotTest
-    extends PHPUnit_Framework_TestCase
+class NotTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Criteria_Criterion_CriterionAbstract
+     * @var CriterionAbstract
      */
-    protected $_innerCriterion;
-    
+    protected $innerCriterion;
+
     /**
-     * @var Ajgl_Criteria_Criterion_Not
+     * @var Not
      */
-    protected $_criterion;
-    
+    protected $criterion;
+
     public function setUp()
     {
-        $this->_innerCriterion = $this->getMock('Ajgl_Criteria_Criterion_CriterionAbstract');
-        $this->_criterion = new Ajgl_Criteria_Criterion_Not($this->_innerCriterion);
+        $this->innerCriterion = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
+        $this->criterion = new Not($this->innerCriterion);
     }
-    
+
     public function testConstructor()
     {
-        $this->assertSame($this->_innerCriterion, $this->_criterion->getInnerCriterion());
+        $this->assertSame($this->innerCriterion, $this->criterion->getInnerCriterion());
     }
 }
 

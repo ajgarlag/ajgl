@@ -16,39 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_EndsWithTest
-    extends PHPUnit_Framework_TestCase
+class EndsWithTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Criteria_Criterion_EndsWith
+     * @var EndsWith
      */
-    protected $_criterion;
-    
+    protected $criterion;
+
     public function setUp()
     {
-        $this->_criterion = new Ajgl_Criteria_Criterion_EndsWith('foo', 'bar');
+        $this->criterion = new EndsWith('foo', 'bar');
     }
-    
+
     public function testConstructor()
     {
-        $this->assertEquals('foo', $this->_criterion->getField());
-        $this->assertEquals('*bar', $this->_criterion->getValue());
+        $this->assertEquals('foo', $this->criterion->getField());
+        $this->assertEquals('*bar', $this->criterion->getValue());
         $this->assertEquals(
-            Ajgl_Criteria_Criterion_FieldAbstract::OPERATOR_WILDCARD,
-            $this->_criterion->getOperator()
+            FieldAbstract::OPERATOR_WILDCARD,
+            $this->criterion->getOperator()
         );
     }
 }

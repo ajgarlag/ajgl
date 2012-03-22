@@ -16,25 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
  * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
  * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_EndsWith
-    extends Ajgl_Criteria_Criterion_Wildcard
+class EndsWith
+    extends Wildcard
 {
     /**
      * @param string $field
-     * @param string $value 
+     * @param string $value
      */
     public function __construct($field, $value) {
         parent::__construct($field, '*' . $value);

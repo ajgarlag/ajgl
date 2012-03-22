@@ -16,54 +16,57 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * Criterion abstract class
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-abstract class Ajgl_Criteria_Criterion_CriterionAbstract
+abstract class CriterionAbstract
 {
     const BOOL_AND = '&';
-    
+
     const BOOL_OR = '|';
-    
+
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion
-     * @return Ajgl_Criteria_Criterion_Logical 
+     * @param CriterionAbstract $criterion
+     * @return Logical
      */
-    public function addAnd(Ajgl_Criteria_Criterion_CriterionAbstract $criterion)
+    public function addAnd(CriterionAbstract $criterion)
     {
-        return new Ajgl_Criteria_Criterion_Logical(
+        return new Logical(
             array($this, $criterion),
             self::BOOL_AND
         );
     }
-    
+
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion
-     * @return Ajgl_Criteria_Criterion_Logical 
+     * @param CriterionAbstract $criterion
+     * @return Logical
      */
-    public function addOr(Ajgl_Criteria_Criterion_CriterionAbstract $criterion)
+    public function addOr(CriterionAbstract $criterion)
     {
-        return new Ajgl_Criteria_Criterion_Logical(
+        return new Logical(
             array($this, $criterion),
             self::BOOL_OR
         );
     }
-    
+
     /**
-     * @return Ajgl_Criteria_Criterion_Not 
+     * @return Not
      */
     public function negate()
     {
-        return new Ajgl_Criteria_Criterion_Not($this);
+        return new Not($this);
     }
 
 }

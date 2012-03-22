@@ -16,62 +16,67 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
+ * @subpackage Criterio
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
+
+use Ajgl\Criteria\Exception;
 
 /**
  * Abstract entity class
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_Logical
-    extends Ajgl_Criteria_Criterion_CriterionAbstract
+class Logical
+    extends CriterionAbstract
 {
     /**
      * @var string
      */
-    protected $_symbol;
+    protected $symbol;
 
     /**
      * @var array
      */
-    protected $_validSymbols = array(self::BOOL_AND, self::BOOL_OR);
+    protected $validSymbols = array(self::BOOL_AND, self::BOOL_OR);
 
     /**
      * @var array
      */
-    protected $_criterions = array();
+    protected $criterions = array();
 
     /**
      * @param array $criterions
-     * @param string $symbol 
+     * @param string $symbol
      */
     public function __construct(array $criterions, $symbol) {
-        
-        if (!in_array($symbol, $this->_validSymbols)) {
-            throw new Exception("Invalid symbol");
+
+        if (!in_array($symbol, $this->validSymbols)) {
+            throw new Exception\InvalidArgumentException("Invalid symbol");
         }
-        
+
         foreach ($criterions as $key => $s) {
-            if (!($s instanceof Ajgl_Criteria_Criterion_CriterionAbstract)) {
-                throw new Exception("Only 'Ajgl_Criteria_Criterion_CriterionAbstract' allowed");
+            if (!($s instanceof CriterionAbstract)) {
+                throw new Exception\InvalidArgumentException("Only '".__NAMESPACE__."\CriterionAbstract' allowed");
             }
         }
-        
-        $this->_criterions = $criterions;
-        $this->_symbol = $symbol;
+
+        $this->criterions = $criterions;
+        $this->symbol = $symbol;
     }
-    
+
     /**
      * @return string
      */
     public function getSymbol()
     {
-        return $this->_symbol;
+        return $this->symbol;
     }
 
     /**
@@ -79,6 +84,6 @@ class Ajgl_Criteria_Criterion_Logical
      */
     public function getCriterions()
     {
-        return $this->_criterions;
+        return $this->criterions;
     }
 }

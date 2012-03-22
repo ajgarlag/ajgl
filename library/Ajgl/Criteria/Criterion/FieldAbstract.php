@@ -16,61 +16,62 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
  * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
  * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-abstract class Ajgl_Criteria_Criterion_FieldAbstract
-    extends Ajgl_Criteria_Criterion_CriterionAbstract
+abstract class FieldAbstract
+    extends CriterionAbstract
 {
     const OPERATOR_EQUALS = '=';
-    
+
     const OPERATOR_GREATER = '>';
-    
+
     const OPERATOR_GREATEROREQUALS = '>=';
-    
+
     const OPERATOR_LESSER = '<';
-    
+
     const OPERATOR_LESSEROREQUALS = '<=';
-    
+
     const OPERATOR_WILDCARD = '*';
-    
+
     const OPERATOR_IN = '∈';
-    
-    /**
-     * @var string
-     */
-    protected $_operator;
-    
-    /**
-     * @var string
-     */
-    protected $_field;
 
     /**
      * @var string
      */
-    protected $_value; 
-    
+    protected $operator;
+
+    /**
+     * @var string
+     */
+    protected $field;
+
+    /**
+     * @var string
+     */
+    protected $value;
+
     /**
      * @param string $field
      * @param string $value
-     * @param string $operator 
+     * @param string $operator
      */
     public function __construct($field, $value, $operator)
     {
-        $this->_operator = $operator;
-        $this->_field = $field;
-        $this->_value = $value;
+        $this->opearator = $operator;
+        $this->field = $field;
+        $this->value = $value;
     }
 
     /**
@@ -78,7 +79,7 @@ abstract class Ajgl_Criteria_Criterion_FieldAbstract
      */
     public function getOperator()
     {
-        return $this->_operator;
+        return $this->opearator;
     }
 
     /**
@@ -86,14 +87,14 @@ abstract class Ajgl_Criteria_Criterion_FieldAbstract
      */
     public function getField()
     {
-        return $this->_field;
+        return $this->field;
     }
-    
+
     /**
      * @return string
      */
     public function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 }

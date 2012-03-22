@@ -17,40 +17,17 @@
  *
  * @category   Ajgl
  * @package    Ajgl\Criteria
- * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-namespace Ajgl\Criteria\Criterion;
+namespace Ajgl\Criteria;
 
 /**
+ * Exception interface
  * @category   Ajgl
  * @package    Ajgl\Criteria
- * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class EqualsTest
-    extends \PHPUnit_Framework_TestCase
-{
-    /**
-     * @var Equals
-     */
-    protected $criterion;
-
-    public function setUp()
-    {
-        $this->criterion = new Equals('foo', 'bar');
-    }
-
-    public function testConstructor()
-    {
-        $this->assertEquals('foo', $this->criterion->getField());
-        $this->assertEquals('bar', $this->criterion->getValue());
-        $this->assertEquals(
-            FieldAbstract::OPERATOR_EQUALS,
-            $this->criterion->getOperator()
-        );
-    }
-}
-
+interface Exception
+{}

@@ -16,38 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
 
 /**
  * Abstract entity class
  * @category   Ajgl
  * @package    Ajgl_Criteria
+ * @subpackage Criterion
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_Not
-    extends Ajgl_Criteria_Criterion_CriterionAbstract
+class Not
+    extends CriterionAbstract
 {
     /**
-     * @var Ajgl_Criteria_Criterion_CriterionAbstract
+     * @var CriterionAbstract
      */
-    protected $_innerCriterion;
-    
+    protected $innerCriterion;
+
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion 
+     * @param CriterionAbstract $criterion
      */
-    public function __construct(Ajgl_Criteria_Criterion_CriterionAbstract $criterion) {
-        $this->_innerCriterion = $criterion;
+    public function __construct(CriterionAbstract $criterion) {
+        $this->innerCriterion = $criterion;
     }
 
     /**
-     * @return Ajgl_Criteria_Criterion_CriterionAbstract
+     * @return CriterionAbstract
      */
     public function getInnerCriterion()
     {
-        return $this->_innerCriterion;
+        return $this->innerCriterion;
     }
 }

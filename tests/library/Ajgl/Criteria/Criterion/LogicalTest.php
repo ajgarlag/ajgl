@@ -16,80 +16,83 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Criterion;
+
+use Ajgl\Criteria\Exception;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Criterion\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Criterion_LogicalTest
-    extends PHPUnit_Framework_TestCase
+class LogicalTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Criteria_Criterion_CriterionAbstract
+     * @var CriterionAbstract
      */
-    protected $_mockCriterion1;
-    
+    protected $mockCriterion1;
+
     /**
-     * @var Ajgl_Criteria_Criterion_CriterionAbstract
+     * @var CriterionAbstract
      */
-    protected $_mockCriterion2;
-    
+    protected $mockCriterion2;
+
     /**
-     * @var Ajgl_Criteria_Criterion_Logical
+     * @var Logical
      */
-    protected $_criterion;
-    
+    protected $criterion;
+
     public function setUp()
     {
-        $this->_mockCriterion1 = $this->getMock('Ajgl_Criteria_Criterion_CriterionAbstract');
-        $this->_mockCriterion2 = $this->getMock('Ajgl_Criteria_Criterion_CriterionAbstract');
-        $this->_criterion = new Ajgl_Criteria_Criterion_Logical(
-            array($this->_mockCriterion1, $this->_mockCriterion2),
-            Ajgl_Criteria_Criterion_CriterionAbstract::BOOL_AND
+        $this->mockCriterion1 = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
+        $this->mockCriterion2 = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
+        $this->criterion = new Logical(
+            array($this->mockCriterion1, $this->mockCriterion2),
+            CriterionAbstract::BOOL_AND
         );
     }
-    
+
     public function testConstructor()
     {
-        $this->assertEquals(2, count($this->_criterion->getCriterions()));
-        $this->assertSame($this->_mockCriterion1, current($this->_criterion->getCriterions()));
-        $this->assertSame($this->_mockCriterion2, next($this->_criterion->getCriterions()));
+        $this->assertEquals(2, count($this->criterion->getCriterions()));
+        $this->assertSame($this->mockCriterion1, current($this->criterion->getCriterions()));
+        $this->assertSame($this->mockCriterion2, next($this->criterion->getCriterions()));
         $this->assertEquals(
-            Ajgl_Criteria_Criterion_CriterionAbstract::BOOL_AND,
-            $this->_criterion->getSymbol()
+            CriterionAbstract::BOOL_AND,
+            $this->criterion->getSymbol()
         );
-        
+
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Criteria\Exception\InvalidArgumentException
      * @expectedExceptionMessage Invalid symbol
      */
     public function testConstructorFailsOnInvalidSymbol()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Logical(
-            array($this->_mockCriterion1, $this->_mockCriterion2),
+        $criterion = new Logical(
+            array($this->mockCriterion1, $this->mockCriterion2),
             'foo'
         );
     }
-    
+
     /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Only 'Ajgl_Criteria_Criterion_CriterionAbstract' allowed
+     * @expectedException Ajgl\Criteria\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Only 'Ajgl\Criteria\Criterion\CriterionAbstract' allowed
      */
     public function testConstructorFailsOnInvalidCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Logical(
-            array($this->_mockCriterion1, $this->_mockCriterion2, 'foobar'),
-            Ajgl_Criteria_Criterion_CriterionAbstract::BOOL_OR
+        $criterion = new Logical(
+            array($this->mockCriterion1, $this->mockCriterion2, 'foobar'),
+            CriterionAbstract::BOOL_OR
         );
     }
 }

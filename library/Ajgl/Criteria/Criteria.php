@@ -16,72 +16,75 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria;
+
+use Ajgl\Criteria\Criterion;
 
 /**
  * Criteria class
  * @category   Ajgl
- * @package    Ajgl_Criteria
+ * @package    Ajgl\Criteria
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria
+class Criteria
 {
     /**
-     * @var Ajgl_Criteria_Criterion_CriterionAbstract 
+     * @var Criterion\CriterionAbstract
      */
-    protected $_criterion;
-    
+    protected $criterion;
+
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion 
+     * @param Criterion\CriterionAbstract $criterion
      */
-    public function __construct(Ajgl_Criteria_Criterion_CriterionAbstract $criterion) {
-        $this->_criterion = $criterion;
+    public function __construct(Criterion\CriterionAbstract $criterion) {
+        $this->criterion = $criterion;
     }
 
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion
-     * @return Ajgl_Criteria 
+     * @param Criterion\CriterionAbstract $criterion
+     * @return Criteria
      */
-    public function setCriterion(Ajgl_Criteria_Criterion_CriterionAbstract $criterion)
+    public function setCriterion(Criterion\CriterionAbstract $criterion)
     {
-        $this->_criterion = $criterion;
+        $this->criterion = $criterion;
         return $this;
     }
 
     /**
-     * @return Ajgl_Criteria_Criterion_CriterionAbstract 
+     * @return Criterion\CriterionAbstract
      */
     public function getCriterion()
     {
-        return $this->_criterion;
+        return $this->criterion;
     }
-    
+
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion
-     * @return Ajgl_Criteria 
+     * @param Criterion\CriterionAbstract $criterion
+     * @return Criteria
      */
-    public function addAndCriterion(Ajgl_Criteria_Criterion_CriterionAbstract $criterion)
+    public function addAndCriterion(Criterion\CriterionAbstract $criterion)
     {
         $this->setCriterion($this->getCriterion()->addAnd($criterion));
         return $this;
     }
 
     /**
-     * @param Ajgl_Criteria_Criterion_CriterionAbstract $criterion
-     * @return Ajgl_Criteria 
+     * @param Criterion\CriterionAbstract $criterion
+     * @return Criteria
      */
-    public function addOrCriterion(Ajgl_Criteria_Criterion_CriterionAbstract $criterion)
+    public function addOrCriterion(Criterion\CriterionAbstract $criterion)
     {
         $this->setCriterion($this->getCriterion()->addOr($criterion));
         return $this;
     }
 
     /**
-     * @return Ajgl_Criteria
+     * @return Criteria
      */
     public function negate()
     {

@@ -16,149 +16,152 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Translator\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Criteria\Translator;
+
+use Ajgl\Criteria\Criterion;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Criteria
- * @subpackage UnitTests
+ * @package    Ajgl\Criteria
+ * @subpackage Translator\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Criteria_Translator_ZendLdapFilterTest
-    extends PHPUnit_Framework_TestCase
+class ZendLdapFilterTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Criteria_Translator_ZendLdapFilter
+     * @var ZendLdapFilter
      */
-    protected $_translator;
-    
+    protected $translator;
+
     public function setUp() {
         parent::setUp();
-        $this->_translator = new Ajgl_Criteria_Translator_ZendLdapFilter();
+        $this->translator = new ZendLdapFilter();
     }
-    
+
     public function testTranslateAnyCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Any('foo');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\Any('foo');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=*)', $filter->__toString());
     }
-    
+
     public function testTranslateBeginsWithCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_BeginsWith('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\BeginsWith('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=bar*)', $filter->__toString());
     }
-    
+
     public function testTranslateEndsWithCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_EndsWith('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\EndsWith('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=*bar)', $filter->__toString());
     }
-    
+
     public function testTranslateEqualsCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Equals('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\Equals('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=bar)', $filter->__toString());
     }
-    
+
     public function testTranslateGreaterOrEqualsCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_GreaterOrEquals('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\GreaterOrEquals('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo>=bar)', $filter->__toString());
     }
-    
+
     public function testTranslateGreaterCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Greater('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\Greater('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo>bar)', $filter->__toString());
     }
-    
+
     public function testTranslateInCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_In('foo', array('bar','lala'));
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\In('foo', array('bar','lala'));
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(|(foo=bar)(foo=lala))', $filter->__toString());
     }
-    
+
     public function testTranslateLesserOrEqualsCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_LesserOrEquals('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\LesserOrEquals('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo<=bar)', $filter->__toString());
     }
-    
+
     public function testTranslateLesserCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Lesser('foo', 'bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\Lesser('foo', 'bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo<bar)', $filter->__toString());
     }
-    
+
     public function testTranslateLogicalCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Logical(
+        $criterion = new Criterion\Logical(
             array(
-                new Ajgl_Criteria_Criterion_Equals('foo', 'bar'),
-                new Ajgl_Criteria_Criterion_Equals('bar', 'foo')
+                new Criterion\Equals('foo', 'bar'),
+                new Criterion\Equals('bar', 'foo')
             ),
-            Ajgl_Criteria_Criterion_Logical::BOOL_AND
+            Criterion\Logical::BOOL_AND
         );
-        $filter = $this->_translator->translateCriterion($criterion);
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(&(foo=bar)(bar=foo))', $filter->__toString());
-        
-        $criterion = new Ajgl_Criteria_Criterion_Logical(
+
+        $criterion = new Criterion\Logical(
             array(
-                new Ajgl_Criteria_Criterion_Equals('foo', 'bar'),
-                new Ajgl_Criteria_Criterion_Equals('bar', 'foo')
+                new Criterion\Equals('foo', 'bar'),
+                new Criterion\Equals('bar', 'foo')
             ),
-            Ajgl_Criteria_Criterion_Logical::BOOL_OR
+            Criterion\Logical::BOOL_OR
         );
-        $filter = $this->_translator->translateCriterion($criterion);
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(|(foo=bar)(bar=foo))', $filter->__toString());
     }
-    
+
     public function testTranslateNotCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Not(
-            new Ajgl_Criteria_Criterion_Equals('foo', 'bar')
+        $criterion = new Criterion\Not(
+            new Criterion\Equals('foo', 'bar')
         );
-        $filter = $this->_translator->translateCriterion($criterion);
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(!(foo=bar))', $filter->__toString());
     }
-    
+
     public function testTranslateWildcardCriterion()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Wildcard('foo', '*bar*');
-        $filter = $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\Wildcard('foo', '*bar*');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=*bar*)', $filter->__toString());
-        
-        $criterion = new Ajgl_Criteria_Criterion_Wildcard('foo', 'bar*');
-        $filter = $this->_translator->translateCriterion($criterion);
+
+        $criterion = new Criterion\Wildcard('foo', 'bar*');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=bar*)', $filter->__toString());
-        
-        $criterion = new Ajgl_Criteria_Criterion_Wildcard('foo', '*bar');
-        $filter = $this->_translator->translateCriterion($criterion);
+
+        $criterion = new Criterion\Wildcard('foo', '*bar');
+        $filter = $this->translator->translateCriterion($criterion);
         $this->assertEquals('(foo=*bar)', $filter->__toString());
     }
-    
+
     /**
-     * @expectedException Exception
+     * @expectedException Ajgl\Criteria\Exception\InvalidArgumentException
      * @expectedExceptionMessage Cannot translate 'b*ar' expression
      */
     public function testTranslateWildcarCriterionFailsOnBadValue()
     {
-        $criterion = new Ajgl_Criteria_Criterion_Wildcard('foo', 'b*ar');
-        $this->_translator->translateCriterion($criterion);
+        $criterion = new Criterion\Wildcard('foo', 'b*ar');
+        $this->translator->translateCriterion($criterion);
     }
 }
