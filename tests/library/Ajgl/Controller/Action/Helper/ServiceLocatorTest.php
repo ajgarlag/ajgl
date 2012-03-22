@@ -39,17 +39,17 @@ class Ajgl_Controller_Action_Helper_ServiceLocatorTest
      * @var Zend_Application_Bootstrap_Bootstrap
      */
     protected $btMock;
-    
+
     /**
      * @var Ajgl_Controller_Action_Helper_ServiceLocator
      */
     protected $helper;
-    
+
     /**
      * @var Bisna\Service\ServiceLocator
      */
     protected $sl;
-    
+
     public function setUp()
     {
         $this->front = Zend_Controller_Front::getInstance();
@@ -57,10 +57,10 @@ class Ajgl_Controller_Action_Helper_ServiceLocatorTest
         $this->front->setRequest(new Zend_Controller_Request_Http());
         $this->btMock = $this->getMock('Zend_Application_Bootstrap_Bootstrap', array(), array(), '', false);
         $this->front->setParam('bootstrap', $this->btMock);
-        $this->sl = $this->getMock('Bisna\Service\ServiceLocator', array(), array(), '', false);
+        $this->sl = $this->getMock('Bisna\Service\ServiceLocator', array('getService'), array(), '', false);
         $this->helper = new Ajgl_Controller_Action_Helper_ServiceLocator();
     }
-    
+
     public function testGetServiceLocator()
     {
         $this->btMock->expects($this->once())->method('getResource')->with($this->equalTo('servicelocator'))->will($this->returnValue($this->sl));
@@ -69,7 +69,7 @@ class Ajgl_Controller_Action_Helper_ServiceLocatorTest
         $sl2 = $this->helper->getServiceLocator();
         $this->assertSame($this->sl, $sl2);
     }
-    
+
     public function testDirect()
     {
         $serviceMock = $this->getMock('Bisna\Service\Service', array(), array(), '', false);
