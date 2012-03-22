@@ -16,33 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Application
- * @subpackage UnitTests
+ * @package    Ajgl\Application
+ * @subpackage Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
+namespace Ajgl\Application\Resource;
+
+use Ajgl\Acl\Acl;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Application
- * @subpackage UnitTests
+ * @package    Ajgl\Application
+ * @subpackage Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
-class Ajgl_Application_Resource_AclcontainerTest
-    extends PHPUnit_Framework_TestCase
+class AclcontainerTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ajgl_Application_Resource_Aclcontainer
+     * @var Aclcontainer
      */
-    protected $_aclcontainer;
- 
+    protected $aclcontainer;
+
     /**
      * @var array
      */
-    protected $_options = array();
-    
+    protected $options = array();
+
     public function setUp()
     {
-        $this->_options = array(
+        $this->options = array(
             'roles' => array(
                 'guest' => null,
                 'member' => 'guest',
@@ -80,20 +83,20 @@ class Ajgl_Application_Resource_AclcontainerTest
                 )
             )
         );
-        $this->_aclcontainer = new Ajgl_Application_Resource_Aclcontainer();
+        $this->aclcontainer = new Aclcontainer();
     }
 
     public function testInit()
     {
-        $this->assertSame($this->_aclcontainer, $this->_aclcontainer->init());
+        $this->assertSame($this->aclcontainer, $this->aclcontainer->init());
     }
-    
+
     public function testGetAcl()
     {
-        $this->_aclcontainer->setOptions($this->_options);
-        $acl = $this->_aclcontainer->getAcl();
-        $this->assertTrue($acl instanceof Ajgl_Acl);
-        $this->assertSame($acl, $this->_aclcontainer->getAcl());
+        $this->aclcontainer->setOptions($this->options);
+        $acl = $this->aclcontainer->getAcl();
+        $this->assertTrue($acl instanceof Acl);
+        $this->assertSame($acl, $this->aclcontainer->getAcl());
         $this->assertTrue($acl->has('account#index'));
     }
 }

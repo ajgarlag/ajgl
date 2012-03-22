@@ -16,47 +16,50 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Application
+ * @package    Ajgl\Application
  * @subpackage Resource
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Application\Resource;
+
+use Ajgl\Acl\Acl;
 
 /**
  * Acl class
  * @category   Ajgl
- * @package    Ajgl_Application
+ * @package    Ajgl\Application
  * @subpackage Resource
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Application_Resource_Aclcontainer
-    extends Zend_Application_Resource_ResourceAbstract
+class Aclcontainer
+    extends \Zend_Application_Resource_ResourceAbstract
 {
     /**
-     * @var Ajgl_Acl
+     * @var Acl
      */
-    protected $_acl;
+    protected $acl;
 
     /**
      * Retrieve initialized Ldap connection
      *
-     * @return Ajgl_Acl
+     * @return Acl
      */
     public function getAcl()
     {
-        if (null === $this->_acl) {
-            $config = new Zend_Config($this->getOptions());
-            $this->_acl = new Ajgl_Acl();
-            $this->_acl->loadConfig($config);
+        if (null === $this->acl) {
+            $config = new \Zend_Config($this->getOptions());
+            $this->acl = new Acl();
+            $this->acl->loadConfig($config);
         }
-        return $this->_acl;
+        return $this->acl;
     }
 
     /**
-     * Defined by Zend_Application_Resource_Resource
+     * Defined by \Zend_Application_Resource_Resource
      *
-     * @return Ajgl_Application_Resource_Aclcontainer
+     * @return Aclcontainer
      */
     public function init()
     {
