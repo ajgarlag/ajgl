@@ -1,108 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="ajgl" default="build" basedir=".">
+<project name="Ajgl" default="build" basedir=".">
     <property name="lib" value="library"/>
+    <property name="checkTestsDir" value="false" />
 
-    <target name="clean"
+    <fileset dir="${project.basedir}" id="libsrc">
+        <include name="${lib}/**/*.php" />
+    </fileset>
+
+    <target name="phplint"
+            description="Checks the php files syntax">
+        <echo msg="Checking php files syntax" />
+        <phplint haltonfailure="true" level="info" deprecatedAsError="true" cachefile="/tmp/ajgl.lint">
+            <fileset refid="libsrc"/>
+        </phplint>
+    </target>
+
+    <target name="phplint-tests"
+            description="Checks the php files syntax">
+        <echo msg="Checking php files syntax" />
+        <phplint haltonfailure="true" level="info" deprecatedAsError="true" cachefile="/tmp/ajgl_tests.lint">
+            <fileset dir="${project.basedir}">
+                <include name="tests/**/*.php" />
+            </fileset>
+        </phplint>
+    </target>
+
+
+    <target name="clean" depends="phplint"
             description="Clean up and create artifact directories">
-        <delete dir="${basedir}/build/api"/>
-        <delete dir="${basedir}/build/code-browser"/>
-        <delete dir="${basedir}/build/coverage"/>
-        <delete dir="${basedir}/build/logs"/>
-        <delete dir="${basedir}/build/pdepend"/>
+        <echo msg="Cleaning directory ./build" />
+        <delete dir="${project.basedir}/build/api"/>
+        <delete dir="${project.basedir}/build/code-browser"/>
+        <delete dir="${project.basedir}/build/coverage"/>
+        <delete dir="${project.basedir}/build/logs"/>
+        <delete dir="${project.basedir}/build/pdepend"/>
+        <delete dir="${project.basedir}/build/phpcs"/>
+        <delete dir="${project.basedir}/build/phpmd"/>
+        <delete dir="${project.basedir}/build/tests"/>
 
-        <mkdir dir="${basedir}/build/api"/>
-        <mkdir dir="${basedir}/build/code-browser"/>
-        <mkdir dir="${basedir}/build/coverage"/>
-        <mkdir dir="${basedir}/build/logs"/>
-        <mkdir dir="${basedir}/build/pdepend"/>
+        <mkdir dir="${project.basedir}/build/api"/>
+        <mkdir dir="${project.basedir}/build/code-browser"/>
+        <mkdir dir="${project.basedir}/build/coverage"/>
+        <mkdir dir="${project.basedir}/build/logs"/>
+        <mkdir dir="${project.basedir}/build/pdepend"/>
+        <mkdir dir="${project.basedir}/build/phpcs"/>
+        <mkdir dir="${project.basedir}/build/phpmd"/>
+        <mkdir dir="${project.basedir}/build/tests"/>
     </target>
 
-    <target name="phpunit"
+    <target name="phpunit" depends="clean"
             description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
-        <exec dir="${basedir}/tests" executable="phpunit" failonerror="true"/>
+        <echo msg="Running unit tests using PHPUnit command" />
+        <exec dir="${project.basedir}/tests" command="phpunit" returnProperty="phpuniterror" passthru="true"/>
+        <phpunitreport infile="${project.basedir}/build/logs/junit.xml"
+                       format="frames"
+                       todir="${project.basedir}/build/tests"
+                       usesorttable="true"/>
+        <if>
+            <equals arg1="${phpuniterror}" arg2="0" />
+            <then>
+                <echo msg="Tests execution success!" />
+            </then>
+            <else>
+                <fail if="phpuniterror" message="Tests execution failed! Code: ${phpuniterror}" />
+            </else>
+        </if>
+
     </target>
 
-    <target name="parallelTasks"
-            description="Run the pdepend, phpmd, phpcpd, phpcs, phpdoc and phploc tasks in parallel using a maximum of 2 threads.">
-        <parallel threadCount="2">
-            <sequential>
-                <antcall target="pdepend"/>
-                <antcall target="phpmd"/>
-            </sequential>
-            <antcall target="phpcpd"/>
-            <antcall target="phpcs"/>
-            <antcall target="docblox"/>
-            <antcall target="phploc"/>
-        </parallel>
-    </target>
-
-    <target name="pdepend"
+    <target name="pdepend" depends="clean"
             description="Generate jdepend.xml and software metrics charts using PHP_Depend">
-        <exec executable="pdepend">
-            <arg line="--jdepend-xml=${basedir}/build/logs/jdepend.xml
-                 --jdepend-chart=${basedir}/build/pdepend/dependencies.svg
-                 --overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg
-                 ${lib}" />
-        </exec>
+        <echo msg="Generating software metrics with PHP_Depend" />
+        <phpdepend>
+            <fileset refid="libsrc"/>
+            <logger type="jdepend-xml" outfile="${project.basedir}/build/logs/jdepend.xml"/>
+            <logger type="jdepend-chart" outfile="${project.basedir}/build/pdepend/dependencies.svg"/>
+            <logger type="overview-pyramid" outfile="${project.basedir}/build/pdepend/overview-pyramid.svg"/>
+            <analyzer type="coderank-mode" value="method"/>
+        </phpdepend>
     </target>
 
-    <target name="phpmd"
+    <target name="phpmd" depends="clean"
             description="Generate pmd.xml using PHPMD">
-        <exec executable="phpmd">
-            <arg line="${lib}
-                 xml
-                 build/phpmd.xml
-                 --reportfile ${basedir}/build/logs/pmd.xml" />
-        </exec>
+        <echo msg="Generating mess detector report with PHPMPD" />
+        <phpmd rulesets="${project.basedir}/build/phpmd.xml">
+            <fileset refid="libsrc"/>
+            <formatter type="xml" outfile="${project.basedir}/build/logs/pmd.xml"/>
+            <formatter type="html" outfile="${project.basedir}/build/phpmd/index.html"/>
+        </phpmd>
     </target>
 
-    <target name="phpcpd"
+    <target name="phpcpd" depends="clean"
             description="Generate pmd-cpd.xml using PHPCPD">
-        <exec executable="phpcpd">
-            <arg line="--log-pmd ${basedir}/build/logs/pmd-cpd.xml --exclude build --exclude docs --exclude tests --exclude vendor ${basedir}" />
-        </exec>
+        <echo msg="Generating copy-paster report with PHPCPD" />
+        <phpcpd>
+            <fileset refid="libsrc"/>
+            <formatter type="pmd" outfile="${project.basedir}/build/logs/pmd-cpd.xml"/>
+        </phpcpd>
     </target>
 
-    <target name="phploc"
+    <target name="phploc" depends="clean"
             description="Generate phploc.csv">
-        <exec executable="phploc">
-            <arg line="--log-csv ${basedir}/build/logs/phploc.csv --exclude build --exclude docs --exclude tests --exclude vendor ${basedir}" />
-        </exec>
+        <echo msg="Generating lines of code report with PHPLOC" />
+        <exec command="phploc --log-csv ${project.basedir}/build/logs/phploc.csv --exclude build --exclude docs --exclude public --exclude tests --exclude vendor ${project.basedir}" />
     </target>
 
-    <target name="phpcs"
+    <target name="phpcs" depends="phplint"
+            description="Interactive checking coding style">
+        <echo msg="Interactively checking coding style" />
+        <exec command="phpcs --standard=/home/aj/public_html/oom/build/phpcs.xml  -a ${lib}" passthru="true" />
+    </target>
+
+    <target name="phpcs-tests" depends="phplint-tests"
+            description="Interactive checking coding style of tests">
+        <echo msg="Interactively checking coding style of tests" />
+        <exec command="phpcs --standard=/home/aj/public_html/oom/build/phpcs.xml  -a ${lib}/../tests" passthru="true" />
+    </target>
+
+    <target name="phpcs-ci" depends="clean"
             description="Generate checkstyle.xml using PHP_CodeSniffer">
-        <exec executable="phpcs" output="/dev/null">
-            <arg line="--report=checkstyle
-                 --report-file=${basedir}/build/logs/checkstyle.xml
-                 --standard=build/phpcs.xml
-                 ${lib}" />
-        </exec>
+        <echo msg="Generating checkstyle report with PHP_CodeSniffer" />
+        <phpcodesniffer standard="${project.basedir}/build/phpcs.xml">
+            <fileset refid="libsrc"/>
+            <formatter type="summary" usefile="false"/>
+            <formatter type="checkstyle" outfile="${project.basedir}/build/logs/checkstyle.xml"/>
+            <formatter type="full" outfile="${project.basedir}/build/phpcs/phpcs.txt"/>
+        </phpcodesniffer>
     </target>
 
-    <target name="phpdoc"
-            description="Generate API documentation using PHPDocumentor">
-        <exec executable="phpdoc">
-            <arg line="-d ${lib} -is -t ${basedir}/build/api -o HTML:frames:DOM/earthli" />
-        </exec>
+
+    <target name="pre-commit-phpcs" depends="clean"
+            description="Generate checkstyle.xml using PHP_CodeSniffer">
+        <echo msg="Generating checkstyle report with PHP_CodeSniffer" />
+        <phpcodesniffer standard="${project.basedir}/build/phpcs.xml"
+                        haltonerror="true">
+            <fileset refid="libsrc"/>
+            <formatter type="summary" usefile="false"/>
+            <formatter type="full" outfile="${project.basedir}/build/phpcs/phpcs.txt"/>
+        </phpcodesniffer>
     </target>
-    
-    <target name="docblox"
+
+    <target name="docblox" depends="clean"
             description="Generate API documentation using DocBlox">
-        <exec executable="docblox">
-            <arg line="project:run -d ${lib}  -t ${basedir}/build/api" />
-        </exec>
+        <echo msg="Generating API documentation using DocBlox" />
+        <docblox title="API Documentation"
+                 destdir="${project.basedir}/build/api">
+            <fileset refid="libsrc"/>
+        </docblox>
     </target>
 
-    <target name="phpcb"
+    <target name="phpcb" depends="clean"
             description="Aggregate tool output with PHP_CodeBrowser">
-        <exec executable="phpcb">
-            <arg line="--log    ${basedir}/build/logs
+        <echo msg="Aggregate tool output with PHP_CodeBrowser" />
+        <exec command="phpcb --log ${project.basedir}/build/logs
                  --source ${lib}
-                 --output ${basedir}/build/code-browser" />
-        </exec>
+                 --output ${project.basedir}/build/code-browser" />
     </target>
 
-    <target name="build" depends="clean,parallelTasks,phpunit,phpcb"/>
+    <target name="build" depends="pdepend,phpmd,phpcpd,phpcs-ci,docblox,phploc,phpunit,phpcb"/>
+    <target name="pre-commit" depends="pre-commit-phpcs,phpunit"/>
+
 </project>

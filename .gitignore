@@ -4,3 +4,6 @@
 /build/coverage/
 /build/logs/
 /build/pdepend/
+/build/tests/
+/build/phpcs/
+/build/phpmd/
