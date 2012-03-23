@@ -1,4 +1,4 @@
-AJ General Libraries
+AJ General Libraries [![Build Status](https://secure.travis-ci.org/ajgarlag/ajgl.png)](http://travis-ci.org/ajgarlag/ajgl)
 ====================
 
 Theese are some PHP libraries that I use for every day work. As I work primarly with the [Zend Framework](http://framework.zend.com), theese libraries are heavily inspired by this framework. Theese libraries complement ZF to satisfy my needs.
