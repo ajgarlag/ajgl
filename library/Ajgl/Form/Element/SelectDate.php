@@ -16,21 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Form
+ * @package    Ajgl\Form
  * @subpackage Element
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Form\Element;
+
+use Ajgl\Form\Exception;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Form
+ * @package    Ajgl\Form
  * @subpackage Element
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Form_Element_SelectDate
-    extends Zend_Form_Element_Text
+class SelectDate
+    extends \Zend_Form_Element_Text
 {
     /**
      * Default form view helper to use for rendering
@@ -41,22 +44,28 @@ class Ajgl_Form_Element_SelectDate
     /**
      * @var integer
      */
-    protected $_day;
+    protected $day;
 
     /**
      * @var integer
      */
-    protected $_month;
+    protected $month;
 
     /**
      * @var integer
      */
-    protected $_year;
+    protected $year;
 
     /**
      * @var type
      */
-    protected $_format = Zend_Date::DATE_SHORT;
+    protected $format = \Zend_Date::DATE_SHORT;
+
+    /**
+     *
+     * @var null|string|\Zend_Locale
+     */
+    protected $locale;
 
     /**
      * Initializes the element
@@ -68,11 +77,11 @@ class Ajgl_Form_Element_SelectDate
 
     /**
      * @param integer $value
-     * @return Ajgl_Form_Element_SelectDate
+     * @return SelectDate
      */
     public function setDay($value)
     {
-        $this->_day = (integer)$value;
+        $this->day = (integer)$value;
         return $this;
     }
 
@@ -81,16 +90,16 @@ class Ajgl_Form_Element_SelectDate
      */
     public function getDay()
     {
-        return $this->_day;
+        return $this->day;
     }
 
     /**
      * @param integer $value
-     * @return Ajgl_Form_Element_SelectDate
+     * @return SelectDate
      */
     public function setMonth($value)
     {
-        $this->_month = (integer)$value;
+        $this->month = (integer)$value;
         return $this;
     }
 
@@ -99,16 +108,16 @@ class Ajgl_Form_Element_SelectDate
      */
     public function getMonth()
     {
-        return $this->_month;
+        return $this->month;
     }
 
     /**
      * @param integer $value
-     * @return Ajgl_Form_Element_SelectDate
+     * @return SelectDate
      */
     public function setYear($value)
     {
-        $this->_year = (integer)$value;
+        $this->year = (integer)$value;
         return $this;
     }
 
@@ -117,16 +126,16 @@ class Ajgl_Form_Element_SelectDate
      */
     public function getYear()
     {
-        return $this->_year;
+        return $this->year;
     }
 
     /**
      * @param string $format
-     * @return Ajgl_Form_Element_SelectDate
+     * @return SelectDate
      */
     public function setFormat($format)
     {
-        $this->_format = $format;
+        $this->format = $format;
         return $this;
     }
 
@@ -135,55 +144,51 @@ class Ajgl_Form_Element_SelectDate
      */
     public function getFormat()
     {
-        return $this->_format;
+        return $this->format;
     }
 
     /**
-     * @param mixed null|string|Zend_Locale $locale
-     * @return Ajgl_Form_Element_SelectDate
+     * @param mixed null|string|\Zend_Locale $locale
+     * @return SelectDate
      */
     public function setLocale($locale)
     {
-        $this->_locale = $locale;
+        $this->locale = $locale;
         return $this;
     }
 
     /**
-     * @return mixed null|string|Zend_Locale
+     * @return mixed null|string|\Zend_Locale
      */
     public function getLocale()
     {
-        return $this->_locale;
+        return $this->locale;
     }
 
     /**
      *
-     * @param mixed integer|array|string|Zend_Date|DateTime $value
-     * @return Ajgl_Form_Element_SelectDate
+     * @param mixed array|string|\Zend_Date|\DateTime $value
+     * @return SelectDate
      */
     public function setValue($value)
     {
-        if (is_int($value)) {
-            $this->setDay(date('j', $value))
-                ->setMonth(date('n', $value))
-                ->setYear(date('Y', $value));
-        } elseif (is_array($value)
+        if (is_array($value)
             && (isset($value['day'])
             && isset($value['month'])
             && isset($value['year']))) {
             $this->setDay($value['day'])
                 ->setMonth($value['month'])
                 ->setYear($value['year']);
-        } elseif (is_string($value) && Zend_Date::isDate($value, $this->getFormat(), $this->getLocale())) {
-            $date = new Zend_Date($value, $this->getFormat(), $this->getLocale());
-            $this->setDay($date->get(Zend_Date::DAY_SHORT))
-                ->setMonth($date->get(Zend_Date::MONTH_SHORT))
-                ->setYear($date->get(Zend_Date::YEAR));
-        } elseif (is_object($value) && $value instanceof Zend_Date) {
-            $this->setDay($value->get(Zend_Date::DAY_SHORT))
-                ->setMonth($value->get(Zend_Date::MONTH_SHORT))
-                ->setYear($value->get(Zend_Date::YEAR));
-        } elseif (is_object($value) && $value instanceof DateTime) {
+        } elseif (is_string($value) && \Zend_Date::isDate($value, $this->getFormat(), $this->getLocale())) {
+            $date = new \Zend_Date($value, $this->getFormat(), $this->getLocale());
+            $this->setDay($date->get(\Zend_Date::DAY_SHORT))
+                ->setMonth($date->get(\Zend_Date::MONTH_SHORT))
+                ->setYear($date->get(\Zend_Date::YEAR));
+        } elseif (is_object($value) && $value instanceof \Zend_Date) {
+            $this->setDay($value->get(\Zend_Date::DAY_SHORT))
+                ->setMonth($value->get(\Zend_Date::MONTH_SHORT))
+                ->setYear($value->get(\Zend_Date::YEAR));
+        } elseif (is_object($value) && $value instanceof \DateTime) {
             $dateString = $value->format('j-n-Y');
             $dateArray = array_combine(array('day', 'month', 'year'), explode('-', $dateString));
             $this->setDay($dateArray['day'])
@@ -192,7 +197,7 @@ class Ajgl_Form_Element_SelectDate
         } elseif($value === null) {
             $this->setDay($value)->setMonth($value)->setYear($value);
         } else {
-            throw new Exception('Invalid date value provided');
+            throw new Exception\InvalidArgumentException('Invalid date value provided');
         }
 
         return $this;
@@ -211,7 +216,7 @@ class Ajgl_Form_Element_SelectDate
      */
     public function getValueAsArray()
     {
-        if (empty($this->_day) && empty($this->_month) && empty($this->_year)) {
+        if (empty($this->day) && empty($this->month) && empty($this->year)) {
             return null;
         } else {
             return array(
@@ -223,7 +228,7 @@ class Ajgl_Form_Element_SelectDate
     }
 
     /**
-     * @return mixed Zend_Date|null
+     * @return mixed \Zend_Date|null
      */
     public function getValueAsZendDate()
     {
@@ -231,22 +236,22 @@ class Ajgl_Form_Element_SelectDate
         if ($dateArray === null) {
             return null;
         } else {
-            return new Zend_Date($dateArray);
+            return new \Zend_Date($dateArray);
         }
     }
 
     /**
-     * @param Zend_View_Interface $view
+     * @param \Zend_View_Interface $view
      * @return string
      */
-    public function render(Zend_View_Interface $view = null) {
+    public function render(\Zend_View_Interface $view = null) {
 
         if (null !== $view) {
             $this->setView($view);
         }
 
-        if ($this->getView() instanceof Zend_View_Abstract) {
-            $this->getView()->addHelperPath('Ajgl/View/Helper', 'Ajgl_View_Helper');
+        if ($this->getView() instanceof \Zend_View_Abstract) {
+            $this->getView()->addHelperPath('Ajgl/View/Helper', 'Ajgl\View\Helper');
         }
 
         return parent::render($view);

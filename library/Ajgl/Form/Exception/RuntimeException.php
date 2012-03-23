@@ -16,55 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Form
- * @subpackage Element
+ * @package    Ajgl\Form
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Form\Exception;
+
+use Ajgl\Form\Exception;
 
 /**
+ * Ajgl form runtime exception.
  * @category   Ajgl
- * @package    Ajgl_Form
- * @subpackage Element
+ * @package    Ajgl\Form
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Form_Element_TextDate
-    extends Zend_Form_Element_Text
-{
-    /**
-     * Default form view helper to use for rendering
-     * @var string
-     */
-    public $helper = 'formTextDate';
-
-    public function init()
-    {
-        $this->addValidator('Date', true, array('format' => Zend_Date::DATE_SHORT));
-    }
-
-    public function getValueAsZendDate() {
-        if (!empty($this->_value) && !$this->_value instanceof Zend_Date) {
-            return new Zend_Date($this->_value, Zend_Date::DATE_SHORT);
-        }
-        return null;
-    }
-
-    /**
-     * @param Zend_View_Interface $view
-     * @return string
-     */
-    public function render(Zend_View_Interface $view = null) {
-
-        if (null !== $view) {
-            $this->setView($view);
-
-        }
-
-        if ($this->getView() instanceof Zend_View_Abstract) {
-            $this->getView()->addHelperPath('Ajgl/View/Helper', 'Ajgl_View_Helper');
-        }
-
-        return parent::render($view);
-    }
-}
+class RuntimeException
+    extends \RuntimeException
+    implements Exception
+{}
