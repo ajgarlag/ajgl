@@ -1,7 +1,7 @@
 <?php
 /**
  * AJ General Libraries
- * Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@
  * @category   Ajgl
  * @package    Ajgl\Controller
  * @subpackage Action\Helper\Tests
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  */
 namespace Ajgl\Controller\Action\Helper;
 
@@ -26,7 +26,7 @@ namespace Ajgl\Controller\Action\Helper;
  * @category   Ajgl
  * @package    Ajgl\Controller
  * @subpackage Action\Helper\Tests
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  */
 class ServiceLocatorTest
     extends \PHPUnit_Framework_TestCase

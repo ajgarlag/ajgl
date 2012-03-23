@@ -19,7 +19,7 @@
  * @category   Ajgl
  * @package    Ajgl\Domain
  * @subpackage Infrastructure
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 namespace Ajgl\Domain\Infrastructure;
@@ -30,7 +30,7 @@ namespace Ajgl\Domain\Infrastructure;
  * @category   Ajgl
  * @package    Ajgl\Domain
  * @subpackage Infrastructure
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 interface IdentityMapInterface

@@ -1,7 +1,7 @@
 <?php
 /**
  * AJ General Libraries
- * Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@
  * @category   Ajgl
  * @package    Ajgl\Form
  * @subpackage Element\Tests
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 namespace Ajgl\Form\Element;
@@ -28,7 +28,7 @@ namespace Ajgl\Form\Element;
  * @category   Ajgl
  * @package    Ajgl\Form
  * @subpackage Element\Tests
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 class SelectDateTest

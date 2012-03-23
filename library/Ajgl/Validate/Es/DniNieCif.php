@@ -1,7 +1,7 @@
 <?php
 /**
  * AJ General Libraries
- * Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * @category   Ajgl
  * @package    Ajgl\Validate
  * @subpackage Es
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 namespace Ajgl\Validate\Es;
@@ -30,7 +30,7 @@ namespace Ajgl\Validate\Es;
  * @category   Ajgl
  * @package    Ajgl\Validate
  * @subpackage Es
- * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  * @see        http://es.wikibooks.org/wiki/Algoritmo_para_obtener_la_letra_del_NIF#PHP
  * @see        http://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal#Rutinas_de_c.C3.A1lculo
