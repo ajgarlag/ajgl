@@ -42,7 +42,8 @@ class Not
     /**
      * @param CriterionAbstract $criterion
      */
-    public function __construct(CriterionAbstract $criterion) {
+    public function __construct(CriterionAbstract $criterion)
+    {
         $this->innerCriterion = $criterion;
     }
 

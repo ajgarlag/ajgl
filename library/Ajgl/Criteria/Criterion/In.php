@@ -37,7 +37,8 @@ class In
      * @param string $field
      * @param array $value
      */
-    public function __construct($field, array $value) {
+    public function __construct($field, array $value)
+    {
         parent::__construct($field, $value, self::OPERATOR_IN);
     }
 }

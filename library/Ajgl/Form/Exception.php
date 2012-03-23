@@ -30,4 +30,6 @@ namespace Ajgl\Form;
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
 interface Exception
-{}
+{
+
+}

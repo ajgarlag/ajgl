@@ -36,4 +36,6 @@ use Ajgl\Controller\Action\Helper\Exception;
 class InvalidArgumentException
     extends \InvalidArgumentException
     implements Exception
-{}
+{
+
+}

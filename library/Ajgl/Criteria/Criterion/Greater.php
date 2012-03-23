@@ -37,7 +37,8 @@ class Greater
      * @param string $field
      * @param string $value
      */
-    public function __construct($field, $value) {
+    public function __construct($field, $value)
+    {
         parent::__construct($field, $value, self::OPERATOR_GREATER);
     }
 }

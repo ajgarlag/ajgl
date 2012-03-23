@@ -118,7 +118,8 @@ class FlashMessenger
      * @param mixed $arguments
      * @return mixed
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         return call_user_func_array(array($this->getFlashMessenger(), $name), $arguments);
     }
 }

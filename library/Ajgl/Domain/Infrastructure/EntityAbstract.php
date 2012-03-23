@@ -196,7 +196,8 @@ abstract class EntityAbstract
     /**
      * @return string
      */
-    public function getRootClass() {
+    public function getRootClass()
+    {
         return get_class($this);
     }
 

@@ -41,7 +41,8 @@ class Criteria
     /**
      * @param Criterion\CriterionAbstract $criterion
      */
-    public function __construct(Criterion\CriterionAbstract $criterion) {
+    public function __construct(Criterion\CriterionAbstract $criterion)
+    {
         $this->criterion = $criterion;
     }
 

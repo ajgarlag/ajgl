@@ -36,4 +36,6 @@ use Ajgl\Controller\Action\Helper\Exception;
 class RuntimeException
     extends \RuntimeException
     implements Exception
-{}
+{
+
+}

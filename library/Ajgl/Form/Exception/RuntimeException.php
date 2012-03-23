@@ -34,4 +34,6 @@ use Ajgl\Form\Exception;
 class RuntimeException
     extends \RuntimeException
     implements Exception
-{}
+{
+
+}

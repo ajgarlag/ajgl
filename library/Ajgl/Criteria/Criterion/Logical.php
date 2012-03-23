@@ -55,7 +55,8 @@ class Logical
      * @param array $criterions
      * @param string $symbol
      */
-    public function __construct(array $criterions, $symbol) {
+    public function __construct(array $criterions, $symbol)
+    {
 
         if (!in_array($symbol, $this->validSymbols)) {
             throw new Exception\InvalidArgumentException("Invalid symbol");

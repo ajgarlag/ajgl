@@ -194,7 +194,7 @@ class SelectDate
             $this->setDay($dateArray['day'])
                 ->setMonth($dateArray['month'])
                 ->setYear($dateArray['year']);
-        } elseif($value === null) {
+        } elseif ($value === null) {
             $this->setDay($value)->setMonth($value)->setYear($value);
         } else {
             throw new Exception\InvalidArgumentException('Invalid date value provided');
@@ -244,7 +244,8 @@ class SelectDate
      * @param \Zend_View_Interface $view
      * @return string
      */
-    public function render(\Zend_View_Interface $view = null) {
+    public function render(\Zend_View_Interface $view = null)
+    {
 
         if (null !== $view) {
             $this->setView($view);

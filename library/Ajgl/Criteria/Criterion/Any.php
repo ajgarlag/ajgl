@@ -36,7 +36,8 @@ class Any
     /**
      * @param string $field
      */
-    public function __construct($field) {
+    public function __construct($field)
+    {
         parent::__construct($field, '*');
     }
 }

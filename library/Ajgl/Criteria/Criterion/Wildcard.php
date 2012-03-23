@@ -39,7 +39,8 @@ class Wildcard
      * @param string $field
      * @param string $value
      */
-    public function __construct($field, $value) {
+    public function __construct($field, $value)
+    {
         if (strpos($value, '*') === false) {
             throw new Exception\InvalidArgumentException("Value must have at least one wildcard");
         }
