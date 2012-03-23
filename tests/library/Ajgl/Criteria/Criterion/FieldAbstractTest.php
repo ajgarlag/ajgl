@@ -38,7 +38,7 @@ class FieldAbstractTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new FieldAbstractTest_Criterion('foo', 'bar', '<>');
     }

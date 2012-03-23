@@ -42,7 +42,7 @@ class EntityAbstractTest
      */
     protected $entity;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->entity = new EntityAbstractImplementation;
     }

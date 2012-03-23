@@ -38,7 +38,7 @@ class InTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new In('foo', array('bar'));
     }

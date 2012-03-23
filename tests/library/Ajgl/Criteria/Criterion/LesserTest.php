@@ -38,7 +38,7 @@ class LesserTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new Lesser('foo', 'bar');
     }

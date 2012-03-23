@@ -38,7 +38,7 @@ class CriterionAbstractTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new CriterionAbstractImplementation();
     }

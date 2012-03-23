@@ -40,7 +40,7 @@ class WildcardTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new Wildcard('foo', 'bar*');
     }

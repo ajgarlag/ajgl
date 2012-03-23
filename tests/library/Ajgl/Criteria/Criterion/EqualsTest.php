@@ -38,7 +38,7 @@ class EqualsTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new Equals('foo', 'bar');
     }

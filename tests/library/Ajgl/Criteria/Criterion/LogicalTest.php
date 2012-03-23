@@ -50,7 +50,7 @@ class LogicalTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->mockCriterion1 = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
         $this->mockCriterion2 = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');

@@ -38,7 +38,7 @@ class LesserOrEqualsTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new LesserOrEquals('foo', 'bar');
     }

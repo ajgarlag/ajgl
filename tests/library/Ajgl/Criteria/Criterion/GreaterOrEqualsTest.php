@@ -38,7 +38,7 @@ class GreaterOrEqualsTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new GreaterOrEquals('foo', 'bar');
     }

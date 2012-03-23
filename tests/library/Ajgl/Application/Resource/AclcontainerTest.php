@@ -43,7 +43,7 @@ class AclcontainerTest
      */
     protected $options = array();
 
-    public function setUp()
+    protected function setUp()
     {
         $this->options = array(
             'roles' => array(

@@ -45,7 +45,7 @@ class CriteriaTest
      */
     protected $criteria;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = $this->getMock('Ajgl\Criteria\Criterion\CriterionAbstract');
         $this->criteria = new Criteria($this->criterion);

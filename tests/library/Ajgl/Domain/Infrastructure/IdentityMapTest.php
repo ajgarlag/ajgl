@@ -39,7 +39,7 @@ class IdentityMapTest
      */
     protected $identityMap;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->identityMap = new IdentityMap();
     }

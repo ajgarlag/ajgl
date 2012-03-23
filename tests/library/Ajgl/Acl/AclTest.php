@@ -43,7 +43,7 @@ class AclTest
      */
     protected $acl;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->config = new \Zend_Config(
             array(

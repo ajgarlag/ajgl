@@ -38,7 +38,7 @@ class EndsWithTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new EndsWith('foo', 'bar');
     }

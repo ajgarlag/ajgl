@@ -36,7 +36,7 @@ class MultiPageTest
      */
     protected $form;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->form = new MultiPage();
         $this->form->addElement(

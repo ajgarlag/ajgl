@@ -51,7 +51,7 @@ class ServiceLocatorTest
      */
     protected $sl;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->front = \Zend_Controller_Front::getInstance();
         $this->front->resetInstance();

@@ -43,7 +43,7 @@ class NotTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->innerCriterion = $this->getMock(__NAMESPACE__ . '\CriterionAbstract');
         $this->criterion = new Not($this->innerCriterion);

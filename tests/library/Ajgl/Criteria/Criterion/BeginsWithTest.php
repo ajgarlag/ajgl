@@ -38,7 +38,7 @@ class BeginsWithTest
      */
     protected $criterion;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->criterion = new BeginsWith('foo', 'bar');
     }
