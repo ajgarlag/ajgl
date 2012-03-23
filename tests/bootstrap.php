@@ -10,7 +10,8 @@ ini_set('date.timezone', 'GMT');
 
 require_once 'Zend/Loader/Autoloader.php';
 $zfa = Zend_Loader_Autoloader::getInstance();
-Zend_Registry::set('Zend_Locale', new Zend_Locale('en'));
 
-$zfa->registerNamespace('Ajgl_');
+Zend_Registry::set('Zend_Locale', new Zend_Locale('en'));
+Zend_Session::start();
+
 $zfa->registerNamespace('Ajgl\\');

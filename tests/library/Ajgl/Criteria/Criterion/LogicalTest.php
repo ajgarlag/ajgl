@@ -62,9 +62,11 @@ class LogicalTest
 
     public function testConstructor()
     {
-        $this->assertEquals(2, count($this->criterion->getCriterions()));
-        $this->assertSame($this->mockCriterion1, current($this->criterion->getCriterions()));
-        $this->assertSame($this->mockCriterion2, next($this->criterion->getCriterions()));
+        $criterions = $this->criterion->getCriterions();
+        reset($criterions);
+        $this->assertEquals(2, count($criterions));
+        $this->assertSame($this->mockCriterion1, current($criterions));
+        $this->assertSame($this->mockCriterion2, next($criterions));
         $this->assertEquals(
             CriterionAbstract::BOOL_AND,
             $this->criterion->getSymbol()
