@@ -16,30 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_View
+ * @package    Ajgl\View
  * @subpackage Helper
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\View\Helper;
 
 /**
  * Plugin to render the messages registered with the flashMessenger action helper
  * @category   Ajgl
- * @package    Ajgl_View
+ * @package    Ajgl\View
  * @subpackage Helper
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
+class FlashMessenger
+    extends \Zend_View_Helper_Abstract
 {
     /**
-     * @var Zend_Controller_Action_Helper_FlashMessenger 
+     * @var \Zend_Controller_Action_Helper_FlashMessenger
      */
-    protected $_flashMessenger;
-    
+    protected $flashMessenger;
+
     /**
      * @param string $namespace
-     * @return CudbApp_View_Helper_FlashMessenger
+     * @return FlashMessenger
      */
     public function flashMessenger($namespace = null)
     {
@@ -50,18 +52,18 @@ class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
 
         return $this;
     }
-    
+
     /**
-     * @return Zend_Controller_Action_Helper_FlashMessenger 
+     * @return \Zend_Controller_Action_Helper_FlashMessenger
      */
     public function getFlashMessenger()
     {
-        if (null == $this->_flashMessenger) {
-            $this->_flashMessenger 
-                = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+        if (null == $this->flashMessenger) {
+            $this->flashMessenger
+                = \Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
         }
-        
-        return $this->_flashMessenger;
+
+        return $this->flashMessenger;
     }
 
     /**
@@ -72,7 +74,7 @@ class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
         return $this->getFlashMessenger()->hasCurrentMessages()
             || $this->getFlashMessenger()->hasMessages();
     }
-    
+
     /**
      * @return array
      */
@@ -87,7 +89,7 @@ class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
         }
         return $messages;
     }
-    
+
     /**
      * @return void
      */
@@ -100,7 +102,7 @@ class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
             $this->getFlashMessenger()->clearCurrentMessages();
         }
     }
-    
+
     /**
      * @return array
      */
@@ -110,11 +112,11 @@ class Ajgl_View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
         $this->clearAllMessages();
         return $messages;
     }
-    
+
     /**
      * @param string $name
      * @param mixed $arguments
-     * @return mixed 
+     * @return mixed
      */
     public function __call($name, $arguments) {
         return call_user_func_array(array($this->getFlashMessenger(), $name), $arguments);

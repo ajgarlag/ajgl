@@ -1,6 +1,38 @@
 <?php
-class Ajgl_View_Helper_FormSelectDate
-    extends Zend_View_Helper_FormText
+/**
+ * AJ General Libraries
+ * Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @category   Ajgl
+ * @package    Ajgl\View
+ * @subpackage Helper
+ * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
+ */
+namespace Ajgl\View\Helper;
+
+/**
+ * Plugin to render the form select date
+ * @category   Ajgl
+ * @package    Ajgl\View
+ * @subpackage Helper
+ * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
+ * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
+ */
+class FormSelectDate
+    extends \Zend_View_Helper_FormText
 {
     /**
      * @param string|array $name If a string, the element name.  If an
@@ -10,7 +42,7 @@ class Ajgl_View_Helper_FormSelectDate
      * @param array $attribs Attributes for the element tag.
      * @return string The element XHTML.
      */
-    public function formSelectDate($name, array $value = null, $attribs = null)
+    public function formSelectDate($name, array $value = null, $attribs = array())
     {
         if (isset($attribs['multiple'])) {
             unset($attribs['multiple']);
