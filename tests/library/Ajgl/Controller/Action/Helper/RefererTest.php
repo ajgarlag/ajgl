@@ -16,26 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Controller
- * @subpackage UnitTests
+ * @package    Ajgl\Controller
+ * @subpackage Action\Helper\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
+namespace Ajgl\Controller\Action\Helper;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Controller
- * @subpackage UnitTests
+ * @package    Ajgl\Controller
+ * @subpackage Action\Helper\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
-class Ajgl_Controller_Action_Helper_RefererTest extends PHPUnit_Framework_TestCase {
+class RefererTest
+    extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var Zend_Registry
+     * @var \Zend_Registry
      */
     protected $previousRegistry;
-    
+
     /**
-     * @var Ajgl_Controller_Action_Helper_Referer
+     * @var Referer
      */
     protected $object;
 
@@ -44,36 +46,36 @@ class Ajgl_Controller_Action_Helper_RefererTest extends PHPUnit_Framework_TestCa
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new Ajgl_Controller_Action_Helper_Referer();
+        $this->object = new Referer();
     }
 
     public function testGetSessionNamespace()
     {
         $sessionNamespace = $this->object->getSessionNamespace();
-        $this->assertTrue($sessionNamespace instanceof Zend_Session_Namespace);
+        $this->assertTrue($sessionNamespace instanceof \Zend_Session_Namespace);
         $this->assertEquals(
-            'Ajgl_Controller_Action_Helper_Referer',
+            'Ajgl\Controller\Action\Helper\Referer',
             $sessionNamespace->getNamespace()
         );
     }
 
     public function testSetSessionNamespace()
     {
-        $sessionNamespace = new Zend_Session_Namespace(uniqid('foo_'));
+        $sessionNamespace = new \Zend_Session_Namespace(uniqid('foo_'));
         $this->assertSame($this->object, $this->object->setSessionNamespace($sessionNamespace));
         $this->assertSame($sessionNamespace, $this->object->getSessionNamespace());
     }
-    
+
     public function testSetOptions()
     {
-        $sessionNamespace = new Zend_Session_Namespace(uniqid('foo_'));
+        $sessionNamespace = new \Zend_Session_Namespace(uniqid('foo_'));
         $options = array(
             'sessionNamespace' => $sessionNamespace
         );
         $this->assertSame($this->object, $this->object->setOptions($options));
         $this->assertSame($sessionNamespace, $this->object->getSessionNamespace());
     }
-    
+
     /**
      * @todo Implement testPreDispatch().
      */
@@ -83,7 +85,7 @@ class Ajgl_Controller_Action_Helper_RefererTest extends PHPUnit_Framework_TestCa
                 'This test has not been implemented yet.'
         );
     }
-    
+
     /**
      * @todo Implement testGoToReferer().
      */

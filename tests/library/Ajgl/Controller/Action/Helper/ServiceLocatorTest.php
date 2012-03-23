@@ -16,27 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Controller
- * @subpackage UnitTests
+ * @package    Ajgl\Controller
+ * @subpackage Action\Helper\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
+namespace Ajgl\Controller\Action\Helper;
 
 /**
  * @category   Ajgl
- * @package    Ajgl_Controller
- * @subpackage UnitTests
+ * @package    Ajgl\Controller
+ * @subpackage Action\Helper\Tests
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  */
-class Ajgl_Controller_Action_Helper_ServiceLocatorTest
-    extends PHPUnit_Framework_TestCase
+class ServiceLocatorTest
+    extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Zend_Controller_Front
+     * @var \Zend_Controller_Front
      */
     protected $front;
 
     /**
-     * @var Zend_Application_Bootstrap_Bootstrap
+     * @var \Zend_Application_Bootstrap_Bootstrap
      */
     protected $btMock;
 
@@ -52,13 +53,13 @@ class Ajgl_Controller_Action_Helper_ServiceLocatorTest
 
     public function setUp()
     {
-        $this->front = Zend_Controller_Front::getInstance();
+        $this->front = \Zend_Controller_Front::getInstance();
         $this->front->resetInstance();
-        $this->front->setRequest(new Zend_Controller_Request_Http());
+        $this->front->setRequest(new \Zend_Controller_Request_Http());
         $this->btMock = $this->getMock('Zend_Application_Bootstrap_Bootstrap', array(), array(), '', false);
         $this->front->setParam('bootstrap', $this->btMock);
         $this->sl = $this->getMock('Bisna\Service\ServiceLocator', array('getService'), array(), '', false);
-        $this->helper = new Ajgl_Controller_Action_Helper_ServiceLocator();
+        $this->helper = new ServiceLocator();
     }
 
     public function testGetServiceLocator()

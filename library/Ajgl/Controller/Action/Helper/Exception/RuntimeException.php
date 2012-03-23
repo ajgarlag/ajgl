@@ -21,43 +21,19 @@
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-namespace Ajgl\Controller\Action\Helper;
+namespace Ajgl\Controller\Action\Helper\Exception;
+
+use Ajgl\Controller\Action\Helper\Exception;
 
 /**
- * Helper to locate application services.
+ * Action controller helper runtime exception.
  * @category   Ajgl
  * @package    Ajgl\Controller
  * @subpackage Action\Helper
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class ServiceLocator
-    extends \Zend_Controller_Action_Helper_Abstract
-{
-    /**
-     * @var Bisna\Service\ServiceLocator
-     */
-    protected $serviceLocator;
-
-    /**
-     * Returns a service identified by its name
-     * @param string $service
-     * @return Bisna\Service\AbstractService
-     */
-    public function direct($service)
-    {
-        return $this->getServiceLocator()->getService($service);
-    }
-
-    /**
-     * Returns the Service Locator
-     * @return Bisna\Service\ServiceLocator
-     */
-    public function getServiceLocator()
-    {
-        if ($this->serviceLocator === null) {
-            $this->serviceLocator = $this->getFrontController()->getParam('bootstrap')->getResource('servicelocator');
-        }
-        return $this->serviceLocator;
-    }
-}
+class RuntimeException
+    extends \RuntimeException
+    implements Exception
+{}

@@ -16,30 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   Ajgl
- * @package    Ajgl_Controller
- * @subpackage Action_Helper
+ * @package    Ajgl\Controller
+ * @subpackage Action\Helper
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
+namespace Ajgl\Controller\Action\Helper;
 
 /**
  * Helper to track the browser referer
  * @category   Ajgl
- * @package    Ajgl_Controller
- * @subpackage Action_Helper
+ * @package    Ajgl\Controller
+ * @subpackage Action\Helper
  * @copyright  Copyright (C) 2010-2011 Antonio J. García Lagar <aj@garcialagar.es>
  * @license    http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL3
  */
-class Ajgl_Controller_Action_Helper_Referer
-    extends Zend_Controller_Action_Helper_Abstract
+class Referer
+    extends \Zend_Controller_Action_Helper_Abstract
 {
     /**
-     * @var Zend_Session_Namespace
+     * @var \Zend_Session_Namespace
      */
-    protected $_sessionNamespace;
+    protected $sessionNamespace;
 
     /**
-     * @param mixed array|Zend_Config
+     *@var arra
+     */
+    protected $options;
+
+    /**
+     * @param mixed array|\Zend_Config
      */
     public function __construct($options = null)
     {
@@ -49,20 +55,20 @@ class Ajgl_Controller_Action_Helper_Referer
     }
 
     /**
-     * @param mixed array|Zend_Config $options
-     * @return Ajgl_Action_Helper_History
+     * @param mixed array|\Zend_Config $options
+     * @return Referer
      */
     public function setOptions($options)
     {
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof \Zend_Config) {
             $options = $options->toArray();
         }
 
         if (!is_array($options)) {
-            throw new Exception('Invalid options; must be array or Zend_Config object');
+            throw new Exception('Invalid options; must be array or \Zend_Config object');
         }
 
-        $this->_options = $options;
+        $this->options = $options;
 
         foreach ($options as $k => $v) {
             $setter = 'set' . ucfirst($k);
@@ -74,23 +80,23 @@ class Ajgl_Controller_Action_Helper_Referer
     }
 
     /**
-     * @return Zend_Session_Namespace
+     * @return \Zend_Session_Namespace
      */
     public function getSessionNamespace()
     {
-        if (null === $this->_sessionNamespace) {
-            $this->setSessionNamespace(new Zend_Session_Namespace(__CLASS__));
+        if (null === $this->sessionNamespace) {
+            $this->setSessionNamespace(new \Zend_Session_Namespace(__CLASS__));
         }
-        return $this->_sessionNamespace;
+        return $this->sessionNamespace;
     }
 
     /**
-     * @param Zend_Session_Namespace $sessionNamespace
-     * @return Ajgl_Controller_Action_Helper_History
+     * @param \Zend_Session_Namespace $sessionNamespace
+     * @return Referer
      */
-    public function setSessionNamespace(Zend_Session_Namespace $sessionNamespace)
+    public function setSessionNamespace(\Zend_Session_Namespace $sessionNamespace)
     {
-        $this->_sessionNamespace = $sessionNamespace;
+        $this->sessionNamespace = $sessionNamespace;
         return $this;
     }
 
@@ -99,12 +105,12 @@ class Ajgl_Controller_Action_Helper_Referer
      */
     public function preDispatch()
     {
-        if ($this->getRequest() instanceof Zend_Controller_Request_Http) {
+        if ($this->getRequest() instanceof \Zend_Controller_Request_Http) {
             if ($this->getRequest()->isGet()) {
                 if (!$this->getRequest()->isXmlHttpRequest()) {
                     if ($requestReferer = $this->getRequest()->getServer('HTTP_REFERER', null)) {
                         $baseUrl = $this->getFrontController()->getBaseUrl();
-                        $serverHelper = new Zend_View_Helper_ServerUrl();
+                        $serverHelper = new \Zend_View_Helper_ServerUrl();
                         $serverUrl = $serverHelper->serverUrl($baseUrl);
                         if (strpos($requestReferer, $serverUrl) === 0) {
                             $requestReferer = substr($requestReferer, strlen($serverUrl));
