@@ -2,10 +2,13 @@
 
 <project name="Ajgl" default="build" basedir=".">
     <property name="lib" value="library"/>
-    <property name="checkTestsDir" value="false" />
 
     <fileset dir="${project.basedir}" id="libsrc">
         <include name="${lib}/**/*.php" />
+    </fileset>
+
+    <fileset dir="${project.basedir}" id="testssrc">
+        <include name="tests/**/*.php" />
     </fileset>
 
     <target name="phplint"
@@ -20,9 +23,7 @@
             description="Checks the php files syntax">
         <echo msg="Checking php files syntax" />
         <phplint haltonfailure="true" level="info" deprecatedAsError="true" cachefile="/tmp/ajgl_tests.lint">
-            <fileset dir="${project.basedir}">
-                <include name="tests/**/*.php" />
-            </fileset>
+            <fileset refid="testssrc"/>
         </phplint>
     </target>
 
@@ -103,7 +104,7 @@
     <target name="phploc" depends="clean"
             description="Generate phploc.csv">
         <echo msg="Generating lines of code report with PHPLOC" />
-        <exec command="phploc --log-csv ${project.basedir}/build/logs/phploc.csv --exclude build --exclude docs --exclude public --exclude tests --exclude vendor ${project.basedir}" />
+        <exec command="phploc --log-csv ${project.basedir}/build/logs/phploc.csv --exclude build --exclude resources --exclude tests --exclude vendor ${project.basedir}" />
     </target>
 
     <target name="phpcs" depends="phplint"
@@ -115,7 +116,7 @@
     <target name="phpcs-tests" depends="phplint-tests"
             description="Interactive checking coding style of tests">
         <echo msg="Interactively checking coding style of tests" />
-        <exec command="phpcs --standard=/home/aj/public_html/oom/build/phpcs.xml  -a ${lib}/../tests" passthru="true" />
+        <exec command="phpcs --standard=/home/aj/public_html/oom/build/phpcs.xml  -a ${project.basedir}/tests" passthru="true" />
     </target>
 
     <target name="phpcs-ci" depends="clean"
