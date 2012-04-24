@@ -40,19 +40,10 @@ abstract class EntityAbstract
      * Name of entity properties
      * @var array
      */
-    protected $properties;
+    protected $properties = array();
 
     public function getProperties()
     {
-        if (!is_array($this->properties)) {
-            $this->properties = array();
-            foreach (get_object_vars($this) as $property => $value) {
-                if ($this->propertyNameIsValid($property)) {
-                    $this->properties[] = substr($property, 2);
-                }
-            }
-            sort($this->properties);
-        }
         return $this->properties;
     }
 
@@ -64,8 +55,6 @@ abstract class EntityAbstract
      */
     public function __set($name, $value)
     {
-        $propname = '__' . $name;
-        $this->validatePropertyName($propname);
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method($value);
@@ -73,7 +62,7 @@ abstract class EntityAbstract
             if (!in_array($name, $this->getProperties())) {
                throw new Exception\InvalidArgumentException("Invalid property '$name'");
             }
-            $this->$propname = $value;
+            $this->$name = $value;
         }
         return $this;
     }
@@ -85,8 +74,6 @@ abstract class EntityAbstract
      */
     public function __get($name)
     {
-        $propname = '__' . $name;
-        $this->validatePropertyName($propname);
         $method = 'get' . ucfirst($name);
         if (method_exists($this, $method)) {
             return $this->$method();
@@ -94,7 +81,7 @@ abstract class EntityAbstract
             if (!in_array($name, $this->getProperties())) {
                throw new Exception\InvalidArgumentException("Invalid property '$name'");
             }
-            return $this->$propname;
+            return $this->$name;
         }
     }
 
@@ -108,9 +95,7 @@ abstract class EntityAbstract
         if (!in_array($name, $this->getProperties())) {
             return false;
         }
-        $propname = '__' . $name;
-        $this->validatePropertyName($propname);
-        return isset($this->$propname);
+        return isset($this->$name);
     }
 
     /**
@@ -120,10 +105,10 @@ abstract class EntityAbstract
      */
     public function __unset($name)
     {
-        $propname = '__' . $name;
-        $this->validatePropertyName($propname);
-        if (isset($this->$propname)) {
-            $this->$propname = null;
+        if (in_array($name, $this->getProperties())) {
+            if (isset($this->$name)) {
+                $this->$name = null;
+            }
         }
     }
 
@@ -165,32 +150,6 @@ abstract class EntityAbstract
                 throw new Exception\BadMethodCallException("Calling a non get/set method that does not exist: $method");
                 break;
         }
-    }
-
-    /**
-     * Validate the property name
-     * @param string $name
-     * @return void
-     * @throws Exception
-     */
-    protected function validatePropertyName($name)
-    {
-        if (!$this->propertyNameIsValid($name)) {
-            throw new Exception\InvalidArgumentException("Invalid property name: '$name' given");
-        }
-    }
-
-    /**
-     * Checks if the given property name is valid
-     * @param string $name
-     * @return boolean
-     */
-    protected function propertyNameIsValid($name)
-    {
-        if (is_string($name) && strlen($name) > 0 && strpos($name, '__') === 0) {
-            return true;
-        }
-        return false;
     }
 
     /**

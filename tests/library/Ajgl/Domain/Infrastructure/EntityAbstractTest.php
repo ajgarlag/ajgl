@@ -247,19 +247,25 @@ class EntityAbstractTest
 class EntityAbstractImplementation
     extends EntityAbstract
 {
-    protected $__propertyG;
-    private $__propertyA = 1;
-    protected $__propertyB = 2;
-    private $_propertyC;
-    protected $_propertyD;
-    private $__propertyE;
+    protected $properties = array(
+        'propertyB',
+        'propertyG',
+        'propertyH'
+    );
+
+    protected $propertyG;
+    private $propertyA = 1;
+    protected $propertyB = 2;
+    private $propertyC;
+    protected $propertyD;
+    private $propertyE;
 
     /**
      * @var stdClass
      */
-    protected $__propertyH;
+    protected $propertyH;
 
-    private $_lazyPropertyF = 'UNDEFINED';
+    private $lazyPropertyF = 'UNDEFINED';
 
     public function hasIdentity()
     {
@@ -273,29 +279,29 @@ class EntityAbstractImplementation
 
     public function setPropertyE($value)
     {
-        $this->__propertyE = 'E:'.$value;
+        $this->propertyE = 'E:'.$value;
         return $this;
     }
 
     public function getPropertyE()
     {
-        return 'Get ' . $this->__propertyE;
+        return 'Get ' . $this->propertyE;
     }
 
     public function setPropertyF($value)
     {
-        $this->_lazyPropertyF = 'UNDEFINED:' . $value;
+        $this->lazyPropertyF = 'UNDEFINED:' . $value;
         return $this;
     }
 
     public function getPropertyF()
     {
-        return $this->_lazyPropertyF;
+        return $this->lazyPropertyF;
     }
 
     public function setPropertyH(\stdClass $object)
     {
-        $this->__propertyH = $object;
+        $this->propertyH = $object;
         return $this;
     }
 }
