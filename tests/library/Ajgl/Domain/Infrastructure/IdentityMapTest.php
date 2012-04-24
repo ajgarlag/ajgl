@@ -167,7 +167,11 @@ class IdentityMapTest
 class Foo
     extends EntityAbstract
 {
-    protected $__id;
+    protected $properties = array(
+        'id'
+    );
+
+    protected $id;
 
     public function  getRootClass()
     {
