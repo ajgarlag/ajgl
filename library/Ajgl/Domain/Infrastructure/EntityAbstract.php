@@ -49,8 +49,8 @@ abstract class EntityAbstract
 
     /**
      * Magic method to set a object property
-     * @param string $name Name of the property
-     * @param mixed $value Value of the property
+     * @param  string $name  Name of the property
+     * @param  mixed  $value Value of the property
      * @return void
      */
     public function __set($name, $value)
@@ -64,13 +64,14 @@ abstract class EntityAbstract
             }
             $this->$name = $value;
         }
+
         return $this;
     }
 
     /**
      * Magic method to get an object property
-     * @param string $name Name of the property
-     * @return mixed Value of the property
+     * @param  string $name Name of the property
+     * @return mixed  Value of the property
      */
     public function __get($name)
     {
@@ -81,13 +82,14 @@ abstract class EntityAbstract
             if (!in_array($name, $this->getProperties())) {
                throw new Exception\InvalidArgumentException("Invalid property '$name'");
             }
+
             return $this->$name;
         }
     }
 
     /**
      * Magic method to check if a property is set
-     * @param string $name Name of the property
+     * @param  string $name Name of the property
      * @return bool
      */
     public function __isset($name)
@@ -95,12 +97,13 @@ abstract class EntityAbstract
         if (!in_array($name, $this->getProperties())) {
             return false;
         }
+
         return isset($this->$name);
     }
 
     /**
      * Magic method to unset a property
-     * @param string $name Name of the property
+     * @param  string $name Name of the property
      * @return void
      */
     public function __unset($name)
@@ -114,8 +117,8 @@ abstract class EntityAbstract
 
     /**
      * Magic method to intercepts method calls
-     * @param string $method Method name
-     * @param array  $arguments Array of given arguments
+     * @param  string $method    Method name
+     * @param  array  $arguments Array of given arguments
      * @return mixed
      */
     public function __call($method, $arguments)
@@ -135,6 +138,7 @@ abstract class EntityAbstract
                 if ($argc != 0) {
                     throw new Exception\BadMethodCallException("Calling a getter with $argc arguments. None allowed");
                 }
+
                 return $this->__get($property);
                 break;
             case 'set':
@@ -144,6 +148,7 @@ abstract class EntityAbstract
                     );
                 }
                 $this->__set($property, current($arguments));
+
                 return $this;
                 break;
             default:
@@ -172,12 +177,13 @@ abstract class EntityAbstract
             $method = 'get' . ucfirst($property);
             $data[$property] = $this->$method();
         }
+
         return $data;
     }
 
     /**
      * Gets an associative array representing the object graph and load it into objects
-     * @param array $data
+     * @param  array          $data
      * @return EntityAbstract
      */
     public function fromArray(array $data)
@@ -190,6 +196,7 @@ abstract class EntityAbstract
                 $this->__unset($property);
             }
         }
+
         return $this;
     }
 }

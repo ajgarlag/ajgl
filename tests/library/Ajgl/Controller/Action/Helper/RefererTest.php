@@ -29,8 +29,8 @@ namespace Ajgl\Controller\Action\Helper;
  * @copyright  Copyright (C) 2010-2012 Antonio J. García Lagar <aj@garcialagar.es>
  */
 class RefererTest
-    extends \PHPUnit_Framework_TestCase {
-
+    extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var \Zend_Registry
      */
@@ -45,7 +45,8 @@ class RefererTest
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->object = new Referer();
     }
 
@@ -79,10 +80,11 @@ class RefererTest
     /**
      * @todo Implement testPreDispatch().
      */
-    public function testPreDispatch() {
+    public function testPreDispatch()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+            'This test has not been implemented yet.'
         );
     }
 
@@ -93,7 +95,7 @@ class RefererTest
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+            'This test has not been implemented yet.'
         );
     }
 }

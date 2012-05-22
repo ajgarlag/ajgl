@@ -1,10 +1,15 @@
 <?php
 // Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(dirname(__FILE__) . '/../library'),
-    realpath(dirname(__FILE__) . '/../vendor/ajgarlag/zf1/library'),
-    get_include_path(),
-)));
+set_include_path(
+    implode(
+        PATH_SEPARATOR,
+        array(
+            realpath(dirname(__FILE__) . '/../library'),
+            realpath(dirname(__FILE__) . '/../vendor/ajgarlag/zf1/library'),
+            get_include_path()
+        )
+    )
+);
 
 ini_set('date.timezone', 'GMT');
 

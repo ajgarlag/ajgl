@@ -232,7 +232,8 @@ class EntityAbstractTest
         try {
             $this->entity->fromArray($data);
             $this->fail('propertyH must admit only stdClass objects as values');
-        } catch (\PHPUnit_Framework_Error $e) {}
+        } catch (\PHPUnit_Framework_Error $e) {
+        }
         $h = new \stdClass();
         $data = array('propertyG' => 'foo', 'propertyH' => $h);
         $this->entity->fromArray($data);
@@ -280,6 +281,7 @@ class EntityAbstractImplementation
     public function setPropertyE($value)
     {
         $this->propertyE = 'E:'.$value;
+
         return $this;
     }
 
@@ -291,6 +293,7 @@ class EntityAbstractImplementation
     public function setPropertyF($value)
     {
         $this->lazyPropertyF = 'UNDEFINED:' . $value;
+
         return $this;
     }
 
@@ -302,6 +305,7 @@ class EntityAbstractImplementation
     public function setPropertyH(\stdClass $object)
     {
         $this->propertyH = $object;
+
         return $this;
     }
 }

@@ -41,7 +41,7 @@ class ServiceLocator
 
     /**
      * Returns a service identified by its name
-     * @param string $service
+     * @param  string                        $service
      * @return Bisna\Service\AbstractService
      */
     public function direct($service)
@@ -58,6 +58,7 @@ class ServiceLocator
         if ($this->serviceLocator === null) {
             $this->serviceLocator = $this->getFrontController()->getParam('bootstrap')->getResource('servicelocator');
         }
+
         return $this->serviceLocator;
     }
 }

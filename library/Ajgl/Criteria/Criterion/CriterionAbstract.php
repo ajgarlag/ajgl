@@ -38,7 +38,7 @@ abstract class CriterionAbstract
     const BOOL_OR = '|';
 
     /**
-     * @param CriterionAbstract $criterion
+     * @param  CriterionAbstract $criterion
      * @return Logical
      */
     public function addAnd(CriterionAbstract $criterion)
@@ -50,7 +50,7 @@ abstract class CriterionAbstract
     }
 
     /**
-     * @param CriterionAbstract $criterion
+     * @param  CriterionAbstract $criterion
      * @return Logical
      */
     public function addOr(CriterionAbstract $criterion)

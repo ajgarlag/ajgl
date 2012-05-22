@@ -47,12 +47,13 @@ class Criteria
     }
 
     /**
-     * @param Criterion\CriterionAbstract $criterion
+     * @param  Criterion\CriterionAbstract $criterion
      * @return Criteria
      */
     public function setCriterion(Criterion\CriterionAbstract $criterion)
     {
         $this->criterion = $criterion;
+
         return $this;
     }
 
@@ -65,22 +66,24 @@ class Criteria
     }
 
     /**
-     * @param Criterion\CriterionAbstract $criterion
+     * @param  Criterion\CriterionAbstract $criterion
      * @return Criteria
      */
     public function addAndCriterion(Criterion\CriterionAbstract $criterion)
     {
         $this->setCriterion($this->getCriterion()->addAnd($criterion));
+
         return $this;
     }
 
     /**
-     * @param Criterion\CriterionAbstract $criterion
+     * @param  Criterion\CriterionAbstract $criterion
      * @return Criteria
      */
     public function addOrCriterion(Criterion\CriterionAbstract $criterion)
     {
         $this->setCriterion($this->getCriterion()->addOr($criterion));
+
         return $this;
     }
 
@@ -90,6 +93,7 @@ class Criteria
     public function negate()
     {
         $this->setCriterion($this->getCriterion()->negate());
+
         return $this;
     }
 }

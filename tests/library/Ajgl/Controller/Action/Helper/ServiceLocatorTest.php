@@ -64,7 +64,10 @@ class ServiceLocatorTest
 
     public function testGetServiceLocator()
     {
-        $this->btMock->expects($this->once())->method('getResource')->with($this->equalTo('servicelocator'))->will($this->returnValue($this->sl));
+        $this->btMock->expects($this->once())
+            ->method('getResource')
+            ->with($this->equalTo('servicelocator'))
+            ->will($this->returnValue($this->sl));
         $sl1 = $this->helper->getServiceLocator();
         $this->assertSame($this->sl, $sl1);
         $sl2 = $this->helper->getServiceLocator();
@@ -74,8 +77,14 @@ class ServiceLocatorTest
     public function testDirect()
     {
         $serviceMock = $this->getMock('Bisna\Service\Service', array(), array(), '', false);
-        $this->sl->expects($this->once())->method('getService')->with($this->equalTo('servicename'))->will($this->returnValue($serviceMock));
-        $this->btMock->expects($this->once())->method('getResource')->with($this->equalTo('servicelocator'))->will($this->returnValue($this->sl));
+        $this->sl->expects($this->once())
+            ->method('getService')
+            ->with($this->equalTo('servicename'))
+            ->will($this->returnValue($serviceMock));
+        $this->btMock->expects($this->once())
+            ->method('getResource')
+            ->with($this->equalTo('servicelocator'))
+            ->will($this->returnValue($this->sl));
         $s = $this->helper->direct('servicename');
         $this->assertSame($serviceMock, $s);
     }

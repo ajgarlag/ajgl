@@ -53,6 +53,7 @@ class Aclcontainer
             $this->acl = new Acl();
             $this->acl->loadConfig($config);
         }
+
         return $this->acl;
     }
 

@@ -40,7 +40,8 @@ class ZendLdapFilterTest
      */
     protected $translator;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
         $this->translator = new ZendLdapFilter();
     }

@@ -55,7 +55,7 @@ class Referer
     }
 
     /**
-     * @param mixed array|\Zend_Config $options
+     * @param  mixed array|\Zend_Config $options
      * @return Referer
      */
     public function setOptions($options)
@@ -76,6 +76,7 @@ class Referer
                 $this->$setter($v);
             }
         }
+
         return $this;
     }
 
@@ -87,16 +88,18 @@ class Referer
         if (null === $this->sessionNamespace) {
             $this->setSessionNamespace(new \Zend_Session_Namespace(__CLASS__));
         }
+
         return $this->sessionNamespace;
     }
 
     /**
-     * @param \Zend_Session_Namespace $sessionNamespace
+     * @param  \Zend_Session_Namespace $sessionNamespace
      * @return Referer
      */
     public function setSessionNamespace(\Zend_Session_Namespace $sessionNamespace)
     {
         $this->sessionNamespace = $sessionNamespace;
+
         return $this;
     }
 
@@ -134,7 +137,7 @@ class Referer
 
     /**
      * @param integer $steps
-     * @param string $whereToGoIfNoHistory Url to go if there is no history step
+     * @param string  $whereToGoIfNoHistory Url to go if there is no history step
      */
     public function goToReferer($whereToGoIfNoReferer = '/')
     {
@@ -157,12 +160,13 @@ class Referer
         if (!$invalidReferers = $this->getSessionNamespace()->invalidReferers) {
             $invalidReferers = array();
         }
+
         return $invalidReferers;
     }
 
     /**
      * Put in invalidReferers array an invalid referer url
-     * @param type $url
+     * @param  type                                  $url
      * @return Ajgl_Controller_Action_Helper_Referer
      */
     public function invalidateReferer($url)

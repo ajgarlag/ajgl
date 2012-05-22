@@ -53,7 +53,7 @@ class IdentityMap
 
     /**
      * Adds an entity to the identity map
-     * @param EntityInterface $entity
+     * @param  EntityInterface $entity
      * @return IdentityMap
      */
     public function add(EntityInterface $entity)
@@ -85,7 +85,7 @@ class IdentityMap
 
     /**
      * Removes an entity from the identity map
-     * @param EntityInterface $entity
+     * @param  EntityInterface $entity
      * @return IdentityMap
      */
     public function remove(EntityInterface $entity)
@@ -116,7 +116,7 @@ class IdentityMap
 
     /**
      * Checks if the given exists in the identity map
-     * @param EntityInterface $entity
+     * @param  EntityInterface $entity
      * @return boolean
      */
     public function exists(EntityInterface $entity)
@@ -140,8 +140,8 @@ class IdentityMap
     /**
      * Checks if the entity identified by classname and ID exists
      *
-     * @param string $classname
-     * @param mixed $id
+     * @param  string  $classname
+     * @param  mixed   $id
      * @return boolean
      */
     public function hasEntity($classname, $id)
@@ -159,8 +159,8 @@ class IdentityMap
      * Returns the entity identified by classname and ID
      *
      * The given classname should be the root classname.
-     * @param string $classname
-     * @param mixed $id
+     * @param  string          $classname
+     * @param  mixed           $id
      * @return EntityInterface
      */
     public function getEntity($classname, $id)
@@ -169,6 +169,7 @@ class IdentityMap
 
         if (isset($this->idsMap[$classname]) && isset($this->idsMap[$classname][$id])) {
             $oid = $this->idsMap[$classname][$id];
+
             return $this->entitiesMap[$oid];
         }
 

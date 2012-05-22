@@ -66,7 +66,7 @@ interface EntityInterface
 
     /**
      * Loads the properties values from an associative array of values
-     * @param array $data
+     * @param  array           $data
      * @return EntityInterface
      */
     public function fromArray(array $data);

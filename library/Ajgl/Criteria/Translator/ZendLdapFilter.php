@@ -37,7 +37,7 @@ use Ajgl\Criteria\Criteria,
 class ZendLdapFilter
 {
     /**
-     * @param Criteria $criteria
+     * @param  Criteria          $criteria
      * @return \Zend_Ldap_Filter
      */
     public function translate(Criteria $criteria)
@@ -46,7 +46,7 @@ class ZendLdapFilter
     }
 
     /**
-     * @param Criterion_CriterionAbstract $criterion
+     * @param  Criterion_CriterionAbstract $criterion
      * @return \Zend_Ldap_Filter
      */
     public function translateCriterion(Criterion\CriterionAbstract $criterion)
@@ -64,7 +64,7 @@ class ZendLdapFilter
     }
 
     /**
-     * @param Criterion\Logical $criterion
+     * @param  Criterion\Logical         $criterion
      * @return \Zend_Ldap_Filter_Logical
      */
     protected function _translateLogicalCriterion(Criterion\Logical $criterion)
@@ -74,7 +74,7 @@ class ZendLdapFilter
             $aFilters[] = $this->translateCriterion($subCriterion);
         }
 
-        switch($criterion->getSymbol()) {
+        switch ($criterion->getSymbol()) {
             case Criterion\CriterionAbstract::BOOL_AND:
                 return new \Zend_Ldap_Filter_And($aFilters);
                 break;
@@ -85,7 +85,7 @@ class ZendLdapFilter
     }
 
     /**
-     * @param Criterion\FieldAbstract $criterion
+     * @param  Criterion\FieldAbstract $criterion
      * @return \Zend_Ldap_Filter
      */
     protected function _translateFieldCriterion(Criterion\FieldAbstract $criterion)
@@ -104,7 +104,7 @@ class ZendLdapFilter
     }
 
     /**
-     * @param Criterion\Not $criterion
+     * @param  Criterion\Not         $criterion
      * @return \Zend_Ldap_Filter_Not
      */
     protected function _translateNotCriterion(Criterion\Not $criterion)
@@ -117,7 +117,7 @@ class ZendLdapFilter
     }
 
     /**
-     * @param Criterion\In $criterion
+     * @param  Criterion\In              $criterion
      * @return \Zend_Ldap_Filter_Logical
      */
     protected function _translateInCriterion(Criterion\In $criterion)
@@ -133,11 +133,12 @@ class ZendLdapFilter
             $criterions,
             Criterion\CriterionAbstract::BOOL_OR
         );
+
         return $this->_translateLogicalCriterion($criterion);
     }
 
     /**
-     * @param Criterion\Wildcard $criterion
+     * @param  Criterion\Wildcard $criterion
      * @return \Zend_Ldap_Filter
      */
     protected function _translateWildcardCriterion(Criterion\Wildcard $criterion)

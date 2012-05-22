@@ -35,7 +35,7 @@ class In
 {
     /**
      * @param string $field
-     * @param array $value
+     * @param array  $value
      */
     public function __construct($field, array $value)
     {

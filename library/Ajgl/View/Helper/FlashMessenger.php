@@ -40,7 +40,7 @@ class FlashMessenger
     protected $flashMessenger;
 
     /**
-     * @param string $namespace
+     * @param  string         $namespace
      * @return FlashMessenger
      */
     public function flashMessenger($namespace = null)
@@ -87,6 +87,7 @@ class FlashMessenger
         if ($this->getFlashMessenger()->hasCurrentMessages()) {
             $messages = array_merge($messages, $this->getFlashMessenger()->getCurrentMessages());
         }
+
         return $messages;
     }
 
@@ -110,12 +111,13 @@ class FlashMessenger
     {
         $messages = $this->getAllMessages();
         $this->clearAllMessages();
+
         return $messages;
     }
 
     /**
-     * @param string $name
-     * @param mixed $arguments
+     * @param  string $name
+     * @param  mixed  $arguments
      * @return mixed
      */
     public function __call($name, $arguments)

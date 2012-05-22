@@ -52,7 +52,7 @@ class Logical
     protected $criterions = array();
 
     /**
-     * @param array $criterions
+     * @param array  $criterions
      * @param string $symbol
      */
     public function __construct(array $criterions, $symbol)

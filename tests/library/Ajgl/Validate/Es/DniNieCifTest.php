@@ -76,7 +76,8 @@ class DniNieCifTest
         'M07415680'
     );
 
-    public function testDniNieCif() {
+    public function testDniNieCif()
+    {
         $v = new DniNieCif();
         foreach ($this->validDnis as $dni) {
             $this->assertTrue($v->isValid($dni));
@@ -89,7 +90,8 @@ class DniNieCifTest
         }
     }
 
-    public function testDisallowDni() {
+    public function testDisallowDni()
+    {
         $v = new DniNieCif(false, true, true);
         foreach ($this->validDnis as $dni) {
             $this->assertFalse($v->isValid($dni));
@@ -102,7 +104,8 @@ class DniNieCifTest
         }
     }
 
-    public function testDisallowNie() {
+    public function testDisallowNie()
+    {
         $v = new DniNieCif(true, false, true);
         foreach ($this->validDnis as $dni) {
             $this->assertTrue($v->isValid($dni));
@@ -115,7 +118,8 @@ class DniNieCifTest
         }
     }
 
-    public function testDisallowCif() {
+    public function testDisallowCif()
+    {
         $v = new DniNieCif(true, true, false);
         foreach ($this->validDnis as $dni) {
             $this->assertTrue($v->isValid($dni));

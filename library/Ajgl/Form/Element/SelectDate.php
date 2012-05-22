@@ -76,12 +76,13 @@ class SelectDate
     }
 
     /**
-     * @param integer $value
+     * @param  integer    $value
      * @return SelectDate
      */
     public function setDay($value)
     {
         $this->day = (integer)$value;
+
         return $this;
     }
 
@@ -94,12 +95,13 @@ class SelectDate
     }
 
     /**
-     * @param integer $value
+     * @param  integer    $value
      * @return SelectDate
      */
     public function setMonth($value)
     {
         $this->month = (integer)$value;
+
         return $this;
     }
 
@@ -112,12 +114,13 @@ class SelectDate
     }
 
     /**
-     * @param integer $value
+     * @param  integer    $value
      * @return SelectDate
      */
     public function setYear($value)
     {
         $this->year = (integer)$value;
+
         return $this;
     }
 
@@ -130,12 +133,13 @@ class SelectDate
     }
 
     /**
-     * @param string $format
+     * @param  string     $format
      * @return SelectDate
      */
     public function setFormat($format)
     {
         $this->format = $format;
+
         return $this;
     }
 
@@ -148,12 +152,13 @@ class SelectDate
     }
 
     /**
-     * @param mixed null|string|\Zend_Locale $locale
+     * @param  mixed null|string|\Zend_Locale $locale
      * @return SelectDate
      */
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
         return $this;
     }
 
@@ -167,7 +172,7 @@ class SelectDate
 
     /**
      *
-     * @param mixed array|string|\Zend_Date|\DateTime $value
+     * @param  mixed array|string|\Zend_Date|\DateTime $value
      * @return SelectDate
      */
     public function setValue($value)
@@ -241,7 +246,7 @@ class SelectDate
     }
 
     /**
-     * @param \Zend_View_Interface $view
+     * @param  \Zend_View_Interface $view
      * @return string
      */
     public function render(\Zend_View_Interface $view = null)

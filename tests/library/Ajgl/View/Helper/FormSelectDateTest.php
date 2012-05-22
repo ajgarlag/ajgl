@@ -40,12 +40,14 @@ class FormSelectDateTest
      */
     protected $object;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->object = new FormSelectDate();
         $this->object->setView(new \Zend_View());
     }
 
-    public function testFormSelectDate() {
+    public function testFormSelectDate()
+    {
         $expected = '<select name="lala[day]" id="lala-day">
     <option value="0" label=""></option>
     <option value="1" label="1">1</option>

@@ -181,17 +181,19 @@ class Auth
             }
             $this->acl = $acl;
         }
+
         return $this->acl;
     }
 
     /**
      * Sets the ACL
-     * @param \Zend_Acl $acl
-     * @return Auth Fluent interface
+     * @param  \Zend_Acl $acl
+     * @return Auth      Fluent interface
      */
     public function setAcl(\Zend_Acl $acl)
     {
         $this->acl = $acl;
+
         return $this;
     }
 
@@ -204,25 +206,27 @@ class Auth
         if (null == $this->auth) {
             $this->auth = \Zend_Auth::getInstance();
         }
+
         return $this->auth;
     }
 
     /**
      * Sets the \Zend_Auth instance
-     * @param \Zend_Auth $auth
-     * @return Auth Fluent interface
+     * @param  \Zend_Auth $auth
+     * @return Auth       Fluent interface
      */
     public function setAuth(\Zend_Auth $auth)
     {
         $this->auth = $auth;
+
         return $this;
     }
 
     /**
      * Sets the callback to be called when looking for the role
-     * @param callback $callback
-     * @param array $arguments
-     * @return Auth Fluent interface
+     * @param  callback $callback
+     * @param  array    $arguments
+     * @return Auth     Fluent interface
      */
     public function setGetRoleCallback($callback, array $arguments = array())
     {
@@ -232,6 +236,7 @@ class Auth
 
         $this->getRoleCallback = $callback;
         $this->getRoleCallbackArguments = $arguments;
+
         return $this;
     }
 
@@ -244,16 +249,18 @@ class Auth
         if (null === $this->getRoleCallback) {
             return null;
         }
+
         return call_user_func_array($this->getRoleCallback, $this->getRoleCallbackArguments);
     }
 
     /**
-     * @param array $loginRoute
+     * @param  array $loginRoute
      * @return Auth
      */
     public function setLoginRouteOptions(array $loginRoute)
     {
         $this->loginRoute = $loginRoute;
+
         return $this;
     }
 
@@ -266,12 +273,13 @@ class Auth
     }
 
     /**
-     * @param array $unauthRoute
+     * @param  array $unauthRoute
      * @return Auth
      */
     public function setUnauthRouteOptions(array $unauthRoute)
     {
         $this->unauthRoute = $unauthRoute;
+
         return $this;
     }
 
@@ -284,12 +292,13 @@ class Auth
     }
 
     /**
-     * @param type $returnParamName
+     * @param  type $returnParamName
      * @return Auth
      */
     public function setReturnParamName($returnParamName)
     {
         $this->returnParamName = (string)$returnParamName;
+
         return $this;
     }
 

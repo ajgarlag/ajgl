@@ -34,7 +34,7 @@ class Acl
 {
     /**
      * Load roles, resources an permissions definitions from a \Zend_Config object
-     * @param \Zend_Config $config
+     * @param  \Zend_Config $config
      * @return Acl
      */
     public function loadConfig(\Zend_Config $config)
@@ -42,6 +42,7 @@ class Acl
         $this->loadRoles($config->roles);
         $this->loadResources($config->resources);
         $this->loadPermissions($config->permissions);
+
         return $this;
     }
 

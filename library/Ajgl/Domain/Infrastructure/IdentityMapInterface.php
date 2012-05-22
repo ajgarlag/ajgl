@@ -37,21 +37,21 @@ interface IdentityMapInterface
 {
     /**
      * Adds an entity to the identity map
-     * @param EntityInterface $entity
+     * @param  EntityInterface      $entity
      * @return IdentityMapInterface
      */
     public function add(EntityInterface $entity);
 
     /**
      * Removes an entity from the identity map
-     * @param EntityInterface $entity
+     * @param  EntityInterface      $entity
      * @return IdentityMapInterface
      */
     public function remove(EntityInterface $entity);
 
     /**
      * Checks if the given exists in the identity map
-     * @param EntityInterface $entity
+     * @param  EntityInterface $entity
      * @return boolean
      */
     public function exists(EntityInterface $entity);
@@ -59,8 +59,8 @@ interface IdentityMapInterface
     /**
      * Checks if the entity identified by classname and ID exists
      *
-     * @param string $classname
-     * @param mixed $id
+     * @param  string  $classname
+     * @param  mixed   $id
      * @return boolean
      */
     public function hasEntity($classname, $id);
@@ -68,8 +68,8 @@ interface IdentityMapInterface
     /**
      * Returns the entity identified by classname and ID
      *
-     * @param string $classname
-     * @param mixed $id
+     * @param  string          $classname
+     * @param  mixed           $id
      * @return EntityInterface
      */
     public function getEntity($classname, $id);

@@ -46,7 +46,8 @@ class AuthTest
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->previousRegistry = \Zend_Registry::getInstance();
         \Zend_Registry::_unsetInstance();
         $this->object = new Auth();
@@ -56,7 +57,8 @@ class AuthTest
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown() {
+    protected function tearDown()
+    {
         \Zend_Registry::_unsetInstance();
         if (isset($this->previousRegistry)) {
             \Zend_Registry::setInstance($this->previousRegistry);
@@ -66,10 +68,11 @@ class AuthTest
     /**
      * @todo Implement testPreDispatch().
      */
-    public function testPreDispatch() {
+    public function testPreDispatch()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+            'This test has not been implemented yet.'
         );
     }
 
@@ -96,7 +99,6 @@ class AuthTest
     public function testGetAclFailsIfRegisteredAclNotValid()
     {
         \Zend_Registry::set('acl', new  \stdClass);
-        //$this->setExpectedException('Exception', "The 'acl' key registered at Zend_Registry must be an instance of 'Zend_Acl'");
         $this->object->getAcl();
     }
 
@@ -135,11 +137,15 @@ class AuthTest
 
     public function testSetGetRoleCallback()
     {
-        $f = function() {return new \stdClass();};
+        $f = function() {
+            return new \stdClass();
+        };
         $this->object->setGetRoleCallback($f);
         $this->assertTrue($this->object->getRole() instanceof \stdClass);
 
-        $f = function($v) {return $v;};
+        $f = function($v) {
+            return $v;
+        };
         $this->object->setGetRoleCallback($f, array('roleName'));
         $this->assertEquals('roleName', $this->object->getRole());
     }

@@ -56,12 +56,13 @@ class MultiPage
     }
 
     /**
-     * @param \Zend_Session_Namespace $sessionNamespace
+     * @param  \Zend_Session_Namespace $sessionNamespace
      * @return MultiPage
      */
     public function setSessionNamespace(\Zend_Session_Namespace $sessionNamespace)
     {
         $this->sessionNamespace = $sessionNamespace;
+
         return $this;
     }
 
@@ -80,17 +81,19 @@ class MultiPage
                 )
             );
         }
+
         return $this->nextButton;
     }
 
     /**
-     * @param \Zend_Form_Element_Submit $button
+     * @param  \Zend_Form_Element_Submit $button
      * @return MultiPage
      */
     public function setNextButton(\Zend_Form_Element_Submit $button)
     {
         $button->setIgnore(true);
         $this->nextButton = $button;
+
         return $this;
     }
 
@@ -98,7 +101,7 @@ class MultiPage
     /**
      * Prepare an item for display as a form
      *
-     * @param  string $spec
+     * @param  string             $spec
      * @return \Zend_Form_SubForm
      */
     public function getPage($spec)
@@ -153,18 +156,19 @@ class MultiPage
     }
 
     /**
-     * @param \Zend_Form_Element $element
+     * @param  \Zend_Form_Element $element
      * @return \Zend_Form_SubForm
      */
     protected function elementToSubFormPage(\Zend_Form_Element $element)
     {
         $subForm = new \Zend_Form_SubForm();
         $subForm->addElement($element);
+
         return $subForm;
     }
 
     /**
-     * @param \Zend_Form_DisplayGroup $group
+     * @param  \Zend_Form_DisplayGroup $group
      * @return \Zend_Form_SubForm
      */
     protected function displayGroupToSubFormPage(\Zend_Form_DisplayGroup $group)
@@ -174,6 +178,7 @@ class MultiPage
             $subForm->addElement($element);
         }
         $subForm->addDisplayGroups(array($group));
+
         return $subForm;
     }
 
@@ -192,41 +197,45 @@ class MultiPage
                 'Form',
             )
         );
+
         return $this;
     }
 
     /**
-     * @param \Zend_Form_SubForm $subForm
+     * @param  \Zend_Form_SubForm $subForm
      * @return Multipage
      */
     protected function setPageNextButton(\Zend_Form_SubForm $subForm)
     {
         $subForm->addElement($this->getNextButton());
+
         return $this;
     }
 
     /**
-     * @param \Zend_Form_SubForm $subForm
+     * @param  \Zend_Form_SubForm $subForm
      * @return Multipage
      */
     protected function setPageAction(\Zend_Form_SubForm $subForm)
     {
         $subForm->setAction($this->getAction());
+
         return $this;
     }
 
     /**
-     * @param \Zend_Form_SubForm $subForm
+     * @param  \Zend_Form_SubForm $subForm
      * @return Multipage
      */
     protected function setPageMethod(\Zend_Form_SubForm $subForm)
     {
         $subForm->setMethod($this->getMethod());
+
         return $this;
     }
 
     /**
-     * @param string $spec
+     * @param  string  $spec
      * @return boolean
      */
     protected function isFirstSpec($spec)
@@ -246,7 +255,7 @@ class MultiPage
     }
 
     /**
-     * @param string $spec
+     * @param  string  $spec
      * @return boolean
      */
     protected function isLastSpec($spec)
@@ -285,6 +294,7 @@ class MultiPage
     public function getPotentialPages()
     {
         $this->_sort();
+
         return array_keys($this->_order);
     }
 
@@ -306,8 +316,8 @@ class MultiPage
     }
 
     /**
-     * @param string $spec
-     * @param array $data
+     * @param  string  $spec
+     * @param  array   $data
      * @return boolean
      */
     public function pageIsValid(array $data)
@@ -321,6 +331,7 @@ class MultiPage
             $subForm = $this->getPage($spec);
             if ($subForm->isValid($data)) {
                 $this->getSessionNamespace()->$spec = $subForm->getValues();
+
                 return true;
             }
         } else {
@@ -328,6 +339,7 @@ class MultiPage
                 "Invalid spec name: '$spec'"
             );
         }
+
         return false;
     }
 
@@ -354,6 +366,7 @@ class MultiPage
                 );
             }
         }
+
         return $data;
     }
 

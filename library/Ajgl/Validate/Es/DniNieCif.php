@@ -49,7 +49,8 @@ class DniNieCif
     /*
       $numero = "12345678"; //asignación del número de DNI
 
-    function letra_dni($dni) {
+    function letra_dni($dni)
+    {
         return substr("TRWAGMYFPDXBNJZSQVHLCKE",strtr($dni,"XYZ","012")%23,1);
     }
 
@@ -109,7 +110,7 @@ class DniNieCif
     }
 
     /**
-     * @param string $value
+     * @param  string  $value
      * @return boolean
      */
     public function isValid($value)
@@ -118,12 +119,14 @@ class DniNieCif
 
         if (!preg_match(self::PATTERN_GLOBAL, $value)) {
             $this->_error(self::MSG_INVALIDFORMAT);
+
             return false;
         }
 
         if (preg_match(self::PATTERN_DNI, $value)) {
             if (!$this->allowDni) {
                 $this->_error(self::MSG_DNINOTALLOWED);
+
                 return false;
             }
             $checksumDni = self::CHECKSUM_DNI;
@@ -131,12 +134,14 @@ class DniNieCif
                 return true;
             }
             $this->_error(self::MSG_DNIINVALIDCHECKSUM);
+
             return false;
         }
 
         if (preg_match(self::PATTERN_NIE, $value)) {
             if (!$this->allowNie) {
                 $this->_error(self::MSG_NIENOTALLOWED);
+
                 return false;
             }
             $checksumDni = self::CHECKSUM_DNI;
@@ -144,20 +149,24 @@ class DniNieCif
                 return true;
             }
             $this->_error(self::MSG_NIEINVALIDCHECKSUM);
+
             return false;
         }
 
         if (preg_match(self::PATTERN_NIEWITHOUCHECKSUM, $value)) {
             if (!$this->allowNie) {
                 $this->_error(self::MSG_NIENOTALLOWED);
+
                 return false;
             }
+
             return true;
         }
 
         if (preg_match(self::PATTERN_CIF, $value)) {
             if (!$this->allowCif) {
                 $this->_error(self::MSG_CIFNOTALLOWED);
+
                 return false;
             }
             $type = substr($value, 0, 1);
@@ -187,6 +196,7 @@ class DniNieCif
                 case 'S':
                     if ($controlLetter != $checksum) {
                         $this->_error(self::MSG_CIFINVALIDCHECKSUM);
+
                         return false;
                     }
                     break;
@@ -196,20 +206,24 @@ class DniNieCif
                 case 'H':
                     if ($control != $checksum) {
                         $this->_error(self::MSG_CIFINVALIDCHECKSUM);
+
                         return false;
                     }
                     break;
                 default:
                     if ($control != $checksum && $controlLetter != $checksum) {
                         $this->_error(self::MSG_CIFINVALIDCHECKSUM);
+
                         return false;
                     }
                     break;
             }
+
             return true;
         }
 
         $this->_error(self::MSG_UNKNOWNFORMAT);
+
         return false;
     }
 }

@@ -56,7 +56,7 @@ class MultiPageTest
         $this->form->addElement(
             new \Zend_Form_Element_Hidden('hidden', array('value' => 'hiddenValue'))
         );
-        $this->form->addDisplayGroup(array('textarea', 'hidden'),'displayGroup');
+        $this->form->addDisplayGroup(array('textarea', 'hidden'), 'displayGroup');
         $this->form->addSubForm(
             new \Zend_Form_SubForm(
                 array(
@@ -86,12 +86,13 @@ class MultiPageTest
                         )
                     )
                 )
-             ),
+            ),
             'subform1'
         );
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
     }
 
